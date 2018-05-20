@@ -1,0 +1,3 @@
+trick and importance:
+#1 for left,right pointer, remember to left++ and right--
+#2 speel check, focus on ; ) return. make sure no : in the end
