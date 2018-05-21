@@ -53,6 +53,16 @@ instead of below,
     }else{
         curr = null;
     }
+#101. Symmetric Tree
+used recursion or iteration with two queues 
 
+# 270. Closest Binary Search Tree Value
+the diff should be assigned Double.MAX_VALUE  
+the diff should be > instead of <
+  if(diff > Math.abs(target - curr.val)){
+
+#129. Sum Root to Leaf Numbers
+check root by left and right node, check null of them
+if(root.left == null && root.right == null){  
 
 

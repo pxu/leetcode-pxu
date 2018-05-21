@@ -1,0 +1,92 @@
+ Symmetric Tree
+Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
+
+For example, this binary tree [1,2,2,3,4,4,3] is symmetric:
+
+    1
+   / \
+  2   2
+ / \ / \
+3  4 4  3
+But the following [1,2,2,null,3,null,3] is not:
+    1
+   / \
+  2   2
+   \   \
+   3    3
+
+solution1: recursion
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        if(root == null){
+            return true;
+        }
+        
+        return helper(root.left, root.right);
+    }
+    
+    private boolean helper(TreeNode left, TreeNode right){
+        if(left == null && right == null){
+            return true;
+        }else if(left != null && right != null){
+            return left.val == right.val && helper(left.right, right.left) && helper(left.left, right.right);
+        }
+        
+        return false;
+    }
+}
+
+solution 2: iteration using two queues
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        if(root == null){
+            return true;
+        }
+        
+        Queue<TreeNode> q1 = new LinkedList<>();
+        Queue<TreeNode> q2 = new LinkedList<>();
+        q1.add(root);
+        q2.add(root);
+        while(!q1.isEmpty() && !q2.isEmpty()){
+            TreeNode curr1 = q1.remove();
+            TreeNode curr2 = q2.remove();
+            if(curr1 == null && curr2 == null){
+                continue;
+            }else if(curr1 != null && curr2 !=null){
+                if(curr1.val != curr2.val){
+                    return false;
+                }
+                
+                q1.add(curr1.left);
+                q1.add(curr1.right);
+                q2.add(curr2.right);
+                q2.add(curr2.left);
+                
+            }else{
+                return false;
+            }
+            
+        }
+        
+        return q1.isEmpty() && q2.isEmpty();
+        
+    }
+}   
