@@ -4,11 +4,13 @@ trick and importance:
 #3 make sure check above #2 when writing everyline codes
 #4 to calculate distance with sum, add map.put(0, -1) to make it easier
 #5 the spell of length
+#6 remember to consider the carray when adding to listnodes
 mistakes and importance:
 
 #186 Reverse Words in a String II
 forgot to shift left++ and right--
 remember to handle the edge case(i.e in the end)
+
 
 #325Maximum Size Subarray Sum Equals k
 added map.put(0, -1) to make it easy to calculate distance(i - pos)
@@ -26,3 +28,7 @@ if(s.charAt(left) == s.charAt(right)){}else{return;}
 
 #287. Find the Duplicate Number
 remember to use count to check with the mid value; if count > mid, then move high to mid
+
+# Add Two Numbers
+forgot to add the carry
+need to add () around the conditional operator ?:
