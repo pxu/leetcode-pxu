@@ -5,6 +5,7 @@ trick and importance:
 #4 to calculate distance with sum, add map.put(0, -1) to make it easier
 #5 the spell of length
 #6 remember to consider the carray when adding to listnodes
+#7 add ; to the comparator
 mistakes and importance:
 
 #186 Reverse Words in a String II
@@ -32,3 +33,26 @@ remember to use count to check with the mid value; if count > mid, then move hig
 # Add Two Numbers
 forgot to add the carry
 need to add () around the conditional operator ?:
+
+#160. Intersection of Two Linked Lists
+forgot to move the point when calculate the list len
+forgot to handle the edge case
+
+# Merge k Sorted Lists
+for using priorityQueue:
+  forgot the check the null node
+for Divide and conquer using two way merge:
+ code could more precise. using while(right >0)
+
+#98. Validate Binary Search Tree
+3 solutions, top to bottom valid, in order search with recursion and iteration
+for the iteration solution, could use   curr = curr.right;
+instead of below,
+    if(curr.right != null){
+        curr = curr.right;
+    }else{
+        curr = null;
+    }
+
+
+
