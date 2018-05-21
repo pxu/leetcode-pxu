@@ -2,8 +2,8 @@ trick and importance:
 #1 for left,right pointer, remember to left++ and right--
 #2 speel check, focus on ; ) return. make sure no : in the end
 #3 make sure check above #2 when writing everyline codes
-
-
+#4 to calculate distance with sum, add map.put(0, -1) to make it easier
+#5 the spell of length
 mistakes and importance:
 
 #186 Reverse Words in a String II
@@ -14,3 +14,15 @@ remember to handle the edge case(i.e in the end)
 added map.put(0, -1) to make it easy to calculate distance(i - pos)
 try to finish everything in one loop
 
+#Compare Version Numbers
+make sure fill the missing length with 0
+
+#Longest Palindromic Substring
+Forgot to right else case
+if(s.charAt(left) == s.charAt(right)){}else{return;}
+
+#238. Product of Array Except Self
+  using    int leftSides = 1, int rightSides = 1;
+
+#287. Find the Duplicate Number
+remember to use count to check with the mid value; if count > mid, then move high to mid
