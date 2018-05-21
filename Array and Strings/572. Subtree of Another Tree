@@ -1,0 +1,151 @@
+572. Subtree of Another Tree
+Given two non-empty binary trees s and t, check whether tree t has exactly the same structure and node values with a subtree of s. A subtree of s is a tree consists of a node in s and all of this node's descendants. The tree s could also be considered as a subtree of itself.
+
+Example 1:
+Given tree s:
+
+     3
+    / \
+   4   5
+  / \
+ 1   2
+Given tree t:
+   4 
+  / \
+ 1   2
+Return true, because t has the same structure and node values with a subtree of s.
+Example 2:
+Given tree s:
+
+     3
+    / \
+   4   5
+  / \
+ 1   2
+    /
+   0
+Given tree t:
+   4
+  / \
+ 1   2
+Return false.
+
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+ Solution 1: queues
+class Solution {
+    public boolean isSubtree(TreeNode s, TreeNode t) {
+        Queue<TreeNode> queue  = new LinkedList<>();
+        queue.add(s);
+        while(!queue.isEmpty()){
+            int size = queue.size();
+            for(int i = 0; i < size; i++){
+                TreeNode curr = queue.remove();
+                if(isSameTree(curr, t)){
+                    return true;
+                }
+                
+                if(curr.left != null){
+                    queue.add(curr.left);
+                }
+                
+                if(curr.right !=null){
+                    queue.add(curr.right);
+                }
+            }
+        }
+        
+        return false;
+    }
+    
+    private boolean isSameTree(TreeNode curr, TreeNode t){
+        if(curr == null){
+            return false;
+        }
+        
+        Queue<TreeNode> q1 = new LinkedList<>();
+        Queue<TreeNode> q2 = new LinkedList<>();
+        q1.add(curr);
+        q2.add(t);
+        
+        while(!q1.isEmpty() && !q2.isEmpty()){
+            TreeNode n1 = q1.remove();
+            TreeNode n2 = q2.remove();
+            
+            if(n1 == null && n2== null){
+                continue;
+            }else if (n1 !=null && n2!=null){
+                if(n1.val != n2.val){
+                    return false;
+                }
+                
+                q1.add(n1.left);
+                q1.add(n1.right);
+                q2.add(n2.left);
+                q2.add(n2.right);
+            }else{
+                return false;
+            }
+        }
+        
+        return q1.isEmpty() && q2.isEmpty();
+        
+
+    }
+}
+
+
+solution 2: iteration
+class Solution {
+    public boolean isSubtree(TreeNode s, TreeNode t) {
+        Queue<TreeNode> queue  = new LinkedList<>();
+        queue.add(s);
+        while(!queue.isEmpty()){
+            int size = queue.size();
+            for(int i = 0; i < size; i++){
+                TreeNode curr = queue.remove();
+                if(isSameTree(curr, t)){
+                    return true;
+                }
+                
+                if(curr.left != null){
+                    queue.add(curr.left);
+                }
+                
+                if(curr.right !=null){
+                    queue.add(curr.right);
+                }
+            }
+        }
+        
+        return false;
+    }
+    
+    private boolean isSameTree(TreeNode curr, TreeNode t){
+        if(curr == null && t == null){
+            return true;
+        }else if(curr != null & t!= null){
+            if(curr.val != t.val){
+                return false;
+            }else{
+                return isSameTree(curr.left, t.left) && isSameTree(curr.right, t.right);
+            }
+            
+        }else{
+            return false;
+        }
+        
+       
+        
+
+    }
+}

@@ -1,0 +1,78 @@
+653. Two Sum IV - Input is a BST
+iven a Binary Search Tree and a target number, return true if there exist two elements in the BST such that their sum is equal to the given target.
+
+Example 1:
+Input: 
+    5
+   / \
+  3   6
+ / \   \
+2   4   7
+
+Target = 9
+
+Output: True
+Example 2:
+Input: 
+    5
+   / \
+  3   6
+ / \   \
+2   4   7
+
+Target = 28
+
+Output: False
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public boolean findTarget(TreeNode root, int k) {
+        if(root == null || (root.left== null && root.right == null)){
+            return false;
+        }
+        
+        Stack<TreeNode> stack = new Stack<>();
+        stack.add(root);
+        
+        while(!stack.isEmpty()){
+            TreeNode curr = stack.pop();
+            if((curr.val != k - curr.val) && bst(root, (k- curr.val))){
+                return true;
+            }
+            
+            if(curr.left != null){
+                stack.push(curr.left);
+            }
+            
+            if(curr.right != null){
+                stack.push(curr.right);
+            }
+        }
+        
+        return false;
+        
+    }
+    
+    public boolean bst(TreeNode root, int k){
+        if(root == null){
+            return false;
+        }else{
+            if(k > root.val){
+                return bst(root.right, k);
+            }else if(k < root.val){
+                return bst(root.left,k);
+            }else{
+                return true;
+            }
+        }
+
+    }
+}

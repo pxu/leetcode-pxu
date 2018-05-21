@@ -1,6 +1,6 @@
 trick and importance:
 #1 for left,right pointer, remember to left++ and right--
-#2 speel check, focus on ; ) return. make sure no : in the end
+#2 speel check, focus on ; )  make sure no : in the end, checking missing return statement
 #3 make sure check above #2 when writing everyline codes
 #4 to calculate distance with sum, add map.put(0, -1) to make it easier
 #5 the spell of length
@@ -70,4 +70,12 @@ Forgot the create node will real number(shouldn't be the index it self)
  int nodeIndex = findIndexOfMax(nums, start, end);
  TreeNode node = new TreeNode(nodeIndex);
 
+#653. Two Sum IV - Input is a BST
+forgot to check k==root.val case
+forgot to check (curr.val != k - curr.val)
+forgot to check missing return statement
+forgot to check root has no leafs case
 
+#572. Subtree of Another Tree
+added wrong nodes into the queue, should be n1, n2 instead of curr q1.add(curr.left);
+using recursion seems easier
