@@ -65,4 +65,9 @@ the diff should be > instead of <
 check root by left and right node, check null of them
 if(root.left == null && root.right == null){  
 
+#654. Maximum Binary Tree
+Forgot the create node will real number(shouldn't be the index it self)
+ int nodeIndex = findIndexOfMax(nums, start, end);
+ TreeNode node = new TreeNode(nodeIndex);
+
 
