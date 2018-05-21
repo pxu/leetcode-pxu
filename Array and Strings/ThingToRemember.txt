@@ -5,6 +5,12 @@ trick and importance:
 
 
 mistakes and importance:
-#Reverse Words in a String II
-forgot to left++ and right--
+
+#186 Reverse Words in a String II
+forgot to shift left++ and right--
 remember to handle the edge case(i.e in the end)
+
+#325Maximum Size Subarray Sum Equals k
+added map.put(0, -1) to make it easy to calculate distance(i - pos)
+try to finish everything in one loop
+
