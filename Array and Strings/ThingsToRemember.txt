@@ -1,4 +1,94 @@
 trick and importance:
 #1 for left,right pointer, remember to left++ and right--
-#2 speel check, focus on ; ) return. make sure no : in the end
+#2 speel check, focus on ; )  make sure no : in the end, checking missing return statement
 #3 make sure check above #2 when writing everyline codes
+#4 to calculate distance with sum, add map.put(0, -1) to make it easier
+#5 the spell of length
+#6 remember to consider the carray when adding to listnodes
+#7 add ; to the comparator
+#8 remember to initialize variable 
+
+mistakes and importance:
+
+#186 Reverse Words in a String II
+forgot to shift left++ and right--
+remember to handle the edge case(i.e in the end)
+
+
+#325Maximum Size Subarray Sum Equals k
+added map.put(0, -1) to make it easy to calculate distance(i - pos)
+try to finish everything in one loop
+
+#Compare Version Numbers
+make sure fill the missing length with 0
+
+#Longest Palindromic Substring
+Forgot to right else case
+if(s.charAt(left) == s.charAt(right)){}else{return;}
+
+#238. Product of Array Except Self
+  using    int leftSides = 1, int rightSides = 1;
+
+#287. Find the Duplicate Number
+remember to use count to check with the mid value; if count > mid, then move high to mid
+
+# Add Two Numbers
+forgot to add the carry
+need to add () around the conditional operator ?:
+
+#160. Intersection of Two Linked Lists
+forgot to move the point when calculate the list len
+forgot to handle the edge case
+
+# Merge k Sorted Lists
+for using priorityQueue:
+  forgot the check the null node
+for Divide and conquer using two way merge:
+ code could more precise. using while(right >0)
+
+#98. Validate Binary Search Tree
+3 solutions, top to bottom valid, in order search with recursion and iteration
+for the iteration solution, could use   curr = curr.right;
+instead of below,
+    if(curr.right != null){
+        curr = curr.right;
+    }else{
+        curr = null;
+    }
+#101. Symmetric Tree
+used recursion or iteration with two queues 
+
+# 270. Closest Binary Search Tree Value
+the diff should be assigned Double.MAX_VALUE  
+the diff should be > instead of <
+  if(diff > Math.abs(target - curr.val)){
+
+#129. Sum Root to Leaf Numbers
+check root by left and right node, check null of them
+if(root.left == null && root.right == null){  
+
+#654. Maximum Binary Tree
+Forgot the create node will real number(shouldn't be the index it self)
+ int nodeIndex = findIndexOfMax(nums, start, end);
+ TreeNode node = new TreeNode(nodeIndex);
+
+#653. Two Sum IV - Input is a BST
+forgot to check k==root.val case
+forgot to check (curr.val != k - curr.val)
+forgot to check missing return statement
+forgot to check root has no leafs case
+
+#572. Subtree of Another Tree
+added wrong nodes into the queue, should be n1, n2 instead of curr q1.add(curr.left);
+using recursion seems easier
+
+#102. Binary Tree Level Order Traversal
+ if (levelCount == 0) should be check after if(levelCount> 0) check, instead of if/else case
+
+# 314. Binary Tree Vertical Order Traversal
+ make sure the min and max data assign is opposite
+    private int min = Integer.MAX_VALUE;
+    private int max = Integer.MIN_VALUE;
+
+#Inorder Successor in BST
+Didn't notice this is BST

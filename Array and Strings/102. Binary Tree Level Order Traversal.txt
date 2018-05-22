@@ -1,0 +1,110 @@
+102. Binary Tree Level Order Traversal
+Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level).
+
+For example:
+Given binary tree [3,9,20,null,null,15,7],
+    3
+   / \
+  9  20
+    /  \
+   15   7
+return its level order traversal as:
+[
+  [3],
+  [9,20],
+  [15,7]
+]
+
+solution 1: manually check levelcount, next level count
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        if(root == null){
+            return res;
+        }
+        int levelCount = 0;
+        int nextLevelCount = 0;
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        levelCount = 1;
+        List<Integer> levelList = new ArrayList<>();
+        
+        while(!q.isEmpty()){
+            if(levelCount> 0){
+                TreeNode curr = q.remove();
+                levelCount--;
+                levelList.add(curr.val);
+                if(curr.left != null){
+                    q.add(curr.left);
+                    nextLevelCount++;
+                }
+                
+                if(curr.right != null){
+                    q.add(curr.right);
+                    nextLevelCount++;
+                }
+            }
+            
+            if (levelCount == 0){
+                levelCount = nextLevelCount;
+              
+                nextLevelCount = 0;
+                res.add(levelList);
+                levelList = new ArrayList<>();
+            }
+           
+        }
+        
+        return res;
+        
+    }
+}
+
+#solution 2: using queue.size
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        if(root == null){
+            return res;
+        }
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        while(!q.isEmpty()){
+            int size = q.size();
+            List<Integer> levelList = new ArrayList<>();
+            for(int i = 0; i < size; i++){
+                TreeNode curr = q.remove();
+                levelList.add(curr.val);
+                if(curr.left != null){
+                    q.add(curr.left);
+                }
+                
+                if(curr.right != null){
+                    q.add(curr.right);
+                }
+            }
+            res.add(levelList);
+        }
+        
+        return res;
+        
+    }
+}
