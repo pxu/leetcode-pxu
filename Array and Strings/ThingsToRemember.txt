@@ -97,3 +97,9 @@ Didn't notice this is BST
 didn't notice the grid are chars
 char[][] grid
 if(grid[row][col] == 1) is not going to work
+
+#261. Graph Valid Tree
+with dfs, 1st, create all the list within the map in advance
+2nd: check the status in the end of dfs to make sure all the nodes are touched
+with unionfind solution: union method, should be parents[pv] = pu instead of parents[v] = u;
+need to check n -1 == edges.length
