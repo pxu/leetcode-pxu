@@ -92,3 +92,8 @@ using recursion seems easier
 
 #Inorder Successor in BST
 Didn't notice this is BST
+
+#200. Number of Islands
+didn't notice the grid are chars
+char[][] grid
+if(grid[row][col] == 1) is not going to work
