@@ -102,3 +102,27 @@ parent[pu] = parent[pv];
 the grid pos: should be cols*row+ col
 
 
+#261. Graph Valid Tree
+with dfs, 1st, create all the list within the map in advance
+2nd: check the status in the end of dfs to make sure all the nodes are touched
+with unionfind solution: union method, should be parents[pv] = pu instead of parents[v] = u;
+need to check n -1 == edges.length
+
+#210. Course Schedule II
+should handle dependency is empty case
+  if( prerequisites ==null || prerequisites.length == 0){
+      for(int i= 0; i< numCourses;i++){
+          res[i] = i;
+      }
+      return res;
+  }
+
+ return empty array should be:
+if(!dfs(list, i, status, resList)){
+                return new int[0];
+} 
+
+207. Course Schedule
+use 3 status
+int status[] = new int[numCourses];
+used list<list<Integer>> to store the edge information
