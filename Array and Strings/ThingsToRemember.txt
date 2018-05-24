@@ -9,7 +9,7 @@ trick and importance:
 #8 remember to initialize variable 
 #9  when remove last element from list, used
 list.remove(list.size()-1)
-
+#10 quickselect: average time O(N) - n+n/2+n/4.., worst(O(N2)) if reversed
 mistakes and importance:
 
 #186 Reverse Words in a String II
@@ -167,4 +167,21 @@ for(char c: keys[index].toCharArray()){
     backtrack(res,sb,digits, pos+1);
     sb.deleteCharAt(sb.length()-1);
 }
+
+#215. Kth Largest Element in an Array
+need quickselect to invoke the partition
+in the partition, should always check left<=right on each steps!
+
+while(left <= right){
+    while(left <=right && nums[left]<= nums[pivot]) left++;
+    while(left<=right && nums[right] > nums[pivot]) right--;
+    if(left <= right){
+        swap(nums,left, right);
+    }
+}
+
+
+#127. Word Ladder
+ use Set<String> wordSet = new HashSet<>(wordList);
+ use bfs + 26 letters
 
