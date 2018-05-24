@@ -1,0 +1,115 @@
+269. Alien Dictionary
+There is a new alien language which uses the latin alphabet. However, the order among letters are unknown to you. You receive a list of non-empty words from the dictionary, where words are sorted lexicographically by the rules of this new language. Derive the order of letters in this language.
+
+Example 1:
+
+Input:
+[
+  "wrt",
+  "wrf",
+  "er",
+  "ett",
+  "rftt"
+]
+
+Output: "wertf"
+Example 2:
+
+Input:
+[
+  "z",
+  "x"
+]
+
+Output: "zx"
+Example 3:
+
+Input:
+[
+  "z",
+  "x",
+  "z"
+] 
+
+Output: "" 
+
+Explanation: The order is invalid, so return "".
+Note:
+
+You may assume all letters are in lowercase.
+You may assume that if a is a prefix of b, then a must appear before b in the given dictionary.
+If the order is invalid, return an empty string.
+There may be multiple valid order of letters, return any one of them is fine.
+
+solution: topological & dfs
+class Solution {
+    int status[] = new int[26];  
+    public String alienOrder(String[] words) {
+        Map<Character, Set<Character>> map = new HashMap<>();
+        for(char c='a'; c<='z';c++){
+            map.put(c, new HashSet<Character>());
+        }
+        
+       
+        String prevWord = words[0], currWord;
+        for(int i = 1; i < words.length; i++){
+            currWord = words[i];
+            
+            int j = 0;
+            int prevLen = prevWord.length();
+            int currLen = currWord.length();
+            boolean isTheSame = true;
+            while(j < prevLen && j < currLen){
+                if(prevWord.charAt(j) != currWord.charAt(j)){
+                    map.get(prevWord.charAt(j)).add(currWord.charAt(j));
+                    isTheSame = false;
+                    break;
+                }else{
+                    j++;
+                }
+            }
+            
+            if(isTheSame && prevLen > currLen){
+                 return "";
+            }
+            
+            prevWord = currWord;
+        }
+        
+        StringBuilder sb = new StringBuilder();
+         for(Character c: map.keySet()){
+            if(map.get(c).size() == 0){
+                continue;
+            }
+            if(dfs(sb,map,c) == false){
+                return "";
+            } 
+         }
+        
+        return sb.reverse().toString();
+    }
+    
+    private boolean dfs(StringBuilder sb,  Map<Character, Set<Character>> map, Character c){
+        
+        if(status[c-'a'] == 1){
+            return false;
+        }
+        
+        if(status[c-'a'] == 2){
+            return true;
+        }
+        
+        status[c-'a'] = 1;
+        
+        
+        for(Character node: map.get(c)){
+            if(dfs(sb,map,node) == false){
+                return false;
+            }
+        }
+            
+        status[c -'a'] = 2;
+        sb.append(c);
+        return true;
+    }
+}

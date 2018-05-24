@@ -7,6 +7,8 @@ trick and importance:
 #6 remember to consider the carray when adding to listnodes
 #7 add ; to the comparator
 #8 remember to initialize variable 
+#9  when remove last element from list, used
+list.remove(list.size()-1)
 
 mistakes and importance:
 
@@ -126,3 +128,24 @@ if(!dfs(list, i, status, resList)){
 use 3 status
 int status[] = new int[numCourses];
 used list<list<Integer>> to store the edge information
+
+#269. Alien Dictionary
+use topological and dfs
+similar with course schedule
+
+#39. Combination Sum
+mistakes made.
+#a. in the backtrack method, the position should start the same instead of i+1;
+#b. when remove last element from list, used
+list.remove(list.size()) which threw the null point exception
+backtrack template:
+step 1: in main method: invoked
+backtrack(res, new ArrayList<Integer>(), candidates, 0, target);
+
+step2: in implementation method, go through all the elements and add, backtrack , remove last elements
+ for(int i = pos; i < candidates.length; i++){
+    currList.add(candidates[i]);
+    backtrack(res, currList, candidates, i, target - candidates[i]);
+    currList.remove(currList.size()-1);
+}
+
