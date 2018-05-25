@@ -11,6 +11,7 @@ trick and importance:
 list.remove(list.size()-1)
 #10 quickselect: average time O(N) - n+n/2+n/4.., worst(O(N2)) if reversed
 mistakes and importance:
+#11  type has to be in Comparator<type> comparator = new Comparator<type>()
 
 #186 Reverse Words in a String II
 forgot to shift left++ and right--
@@ -184,4 +185,17 @@ while(left <= right){
 #127. Word Ladder
  use Set<String> wordSet = new HashSet<>(wordList);
  use bfs + 26 letters
+
+#126 Word Ladder II
+tricky:the used word can not directly removed from the dictionary. The used word is only removed when steps change.
+Used to visisted and unvisited set to check and make sure the same word could be added mulitple times in the same level
+
+used bfs to get the graph(reversed way) and dfs to get the list. check word==startword. added word first after the operation, remove it from the list;
+
+used 26 letters to find the right candidates
+
+252. Meeting Rooms
+sort withstart, get max end and compare with the new start in the loop
+
+
 
