@@ -198,4 +198,5 @@ used 26 letters to find the right candidates
 sort withstart, get max end and compare with the new start in the loop
 
 
-
+70. Climbing Stairs
+could be handled with recursion+memorization or dp, make sure int dp[] = new int[n+1]
