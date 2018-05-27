@@ -205,3 +205,6 @@ could be handled with recursion+memorization or dp, make sure int dp[] = new int
 make sure to compare with nums[l] instead of l
 make usr remove the duplicated index and sorted the array before operation
 
+#277. Find the Celebrity
+make sure first loop only  case about knows(res,i)
+
