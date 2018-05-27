@@ -200,3 +200,8 @@ sort withstart, get max end and compare with the new start in the loop
 
 70. Climbing Stairs
 could be handled with recursion+memorization or dp, make sure int dp[] = new int[n+1]
+
+#15. 3Sum
+make sure to compare with nums[l] instead of l
+make usr remove the duplicated index and sorted the array before operation
+
