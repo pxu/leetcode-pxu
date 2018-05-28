@@ -216,3 +216,8 @@ use union find and count should start from 0 instead of position length(opposite
 use ArrayDequeue,handle 0 to k element first, check queue is not empty and remove the value less than or equals to itself;
 make sure compare with the nums[index] instead of index itself ;
 remove the item oout of windows by check i - window.peekFirst() >= window_size 
+
+# Minimum Window Substring
+using hash[256] and count to track the usage of each alphabet
+compare with s.charAt(left) or s.charAt(right) instead of left and right;
+keep on move to the right
