@@ -221,3 +221,6 @@ remove the item oout of windows by check i - window.peekFirst() >= window_size
 using hash[256] and count to track the usage of each alphabet
 compare with s.charAt(left) or s.charAt(right) instead of left and right;
 keep on move to the right
+
+189. Rotate Array
+make sure handle k = k%nums.length; k= k<0?k+nums.length:k
