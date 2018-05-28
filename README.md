@@ -1,2 +1,2 @@
 # leetcode-pxuth
-This is just the solution I make for the leetcodes
+This is just the solution I made for the leetcodes
