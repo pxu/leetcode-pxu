@@ -208,3 +208,11 @@ make usr remove the duplicated index and sorted the array before operation
 #277. Find the Celebrity
 make sure first loop only  case about knows(res,i)
 
+305. Number of Islands II
+make sure create grid[][] first and don't confused with positions[][];
+use union find and count should start from 0 instead of position length(opposite with number of island 1)
+
+#  Sliding Window Maximum
+use ArrayDequeue,handle 0 to k element first, check queue is not empty and remove the value less than or equals to itself;
+make sure compare with the nums[index] instead of index itself ;
+remove the item oout of windows by check i - window.peekFirst() >= window_size 
