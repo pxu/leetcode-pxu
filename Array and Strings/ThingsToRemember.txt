@@ -224,3 +224,7 @@ keep on move to the right
 
 189. Rotate Array
 make sure handle k = k%nums.length; k= k<0?k+nums.length:k
+
+449. Serialize and Deserialize BST
+for serialize: using preorder, store null node as "#"
+for deseriazation, using queue,if poped is not null, root = TN(v); root.left=buildTree(queue);..
