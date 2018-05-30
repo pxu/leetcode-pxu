@@ -233,3 +233,7 @@ for deseriazation, using queue,if poped is not null, root = TN(v); root.left=bui
 make sure keep both key and val in the Node class
 addToFront method need 5 steps
 make evict_if_applicable method
+
+
+# Find Median from Data Stream
+use max and min queue
