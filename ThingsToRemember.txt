@@ -237,3 +237,8 @@ make evict_if_applicable method
 
 # Find Median from Data Stream
 use max and min queue
+
+#79. Word Search
+used dfs and backtrack
+passed the current index
+make sure only one place to check and edge case
