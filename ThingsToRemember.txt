@@ -242,3 +242,7 @@ use max and min queue
 used dfs and backtrack
 passed the current index
 make sure only one place to check and edge case
+
+212. Word Search II
+Used DFS + Trie solution
+TrieNode has TrieNode[26] and word end at that level
