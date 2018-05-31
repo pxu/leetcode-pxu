@@ -1,0 +1,68 @@
+Given a 2D board and a word, find if the word exists in the grid.
+
+The word can be constructed from letters of sequentially adjacent cell, where "adjacent" cells are those horizontally or vertically neighboring. The same letter cell may not be used more than once.
+
+Example:
+
+board =
+[
+  ['A','B','C','E'],
+  ['S','F','C','S'],
+  ['A','D','E','E']
+]
+
+Given word = "ABCCED", return true.
+Given word = "SEE", return true.
+Given word = "ABCB", return false.
+solution: dfs + backtrack
+
+class Solution {
+    int dirs[][] = {{0, -1},{-1,0},{0, 1},{1, 0}};
+    
+    public boolean exist(char[][] board, String word) {
+        if(board == null || board.length == 0 || word == null || word.length() == 0){
+            return false;
+        }
+        int rows = board.length;
+        int cols = board[0].length;
+        int status[][] = new int[rows][cols];
+        
+        for(int row = 0; row < rows; row++){
+            for(int col = 0; col < cols; col++){
+
+                if(dfs(row, col, rows,cols,board, word,0, status) == true){
+                   return true;
+               }
+                
+            }
+        }
+        
+        return false;
+    }
+    
+    private boolean dfs(int row, int col, int rows, int cols, char[][] board, String word, int curr, int status[][]){
+        if(curr == word.length()){
+            return true;
+        }else{
+             if(row < 0 || row >= rows || col < 0 || col >= cols){
+                return false;
+             }
+            
+             if(status[row][col] == 0 && board[row][col] == word.charAt(curr)){    
+                 status[row][col] = 1;
+                 for(int dir[]: dirs){
+                     int newRow = row + dir[0];
+                     int newCol = col + dir[1];
+                    
+                    if(dfs(newRow, newCol,rows, cols, board, word, curr+1, status)){
+                        return true;
+                    }
+            
+                 }
+                 status[row][col] = 0;
+            }
+          
+            return false;
+        }
+    }
+}
