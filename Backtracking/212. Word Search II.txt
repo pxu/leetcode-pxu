@@ -1,0 +1,92 @@
+Given a 2D board and a list of words from the dictionary, find all words in the board.
+
+Each word must be constructed from letters of sequentially adjacent cell, where "adjacent" cells are those horizontally or vertically neighboring. The same letter cell may not be used more than once in a word.
+
+Example:
+
+Input: 
+words = ["oath","pea","eat","rain"] and board =
+[
+  ['o','a','a','n'],
+  ['e','t','a','e'],
+  ['i','h','k','r'],
+  ['i','f','l','v']
+]
+
+Output: ["eat","oath"]
+Note:
+You may assume that all inputs are consist of lowercase letters a-z.
+
+class Solution {
+    int dirs[][] = {{0,-1},{-1,0},{0,1},{1,0}};
+    int longestLen = 0;
+    public List<String> findWords(char[][] board, String[] words) {
+        Set<String> res = new HashSet<>();
+        if(board == null || board.length == 0){
+            return new ArrayList<String>(res);
+        }
+        
+        TrieNode root = new TrieNode();
+        for(String word: words){
+            addWordToTrieNode(root, word);
+        }
+        
+        int rows = board.length;
+        int cols = board[0].length;
+        boolean status[][] = new boolean[rows][cols];
+        
+        for(int row = 0; row < rows; row++){
+            for(int col = 0; col < cols; col++){
+                dfs(row, col,rows,cols,board, root, res, status); 
+            }
+        }
+        
+        return new ArrayList<String>(res);
+    }
+    
+    private void dfs(int row, int col, int rows, int cols, char[][] board, TrieNode node, Set<String> res, boolean status[][]){
+               
+        if(row < 0 || row >= rows || col <0 || col >= cols || status[row][col]){
+            return;
+        }
+        
+        int k = board[row][col] - 'a';
+        if(node.children[k] == null){
+            return;
+        }  
+        
+        if(node.children[k].word != null){
+            res.add(node.children[k].word);
+            node.children[k].word = null;
+        }
+        
+        status[row][col] = true;   
+        for(int dir[]: dirs){
+            int newRow = row + dir[0];
+            int newCol = col + dir[1];
+            
+            dfs(newRow, newCol, rows, cols, board, node.children[k], res, status);
+        }
+
+        status[row][col] = false;   
+    }
+    
+    private void addWordToTrieNode(TrieNode root, String word){
+        TrieNode p = root;
+        for(char c: word.toCharArray()){
+            if(p.children[c-'a'] == null){
+                p.children[c-'a'] = new TrieNode();
+            }
+            p = p.children[c-'a'];
+        }
+        p.word = word;
+        
+    }
+    
+    private class TrieNode{
+        TrieNode children[] = new TrieNode[26];
+        String word;
+    }
+    
+    
+}
