@@ -12,6 +12,7 @@ list.remove(list.size()-1)
 #10 quickselect: average time O(N) - n+n/2+n/4.., worst(O(N2)) if reversed
 mistakes and importance:
 #11  type has to be in Comparator<type> comparator = new Comparator<type>()
+#12 for map and list, need to check has elements or not
 
 #186 Reverse Words in a String II
 forgot to shift left++ and right--
