@@ -257,3 +257,7 @@ TrieNode has TrieNode[26] and word end at that level
 208.Implement Trie (Prefix Tree)
 created class TrieNode
 has TrieNode root in the Trie class
+
+791. Custom Sort String
+Use bucket solution
+(char)('a'+i) could be used to convert int to char
