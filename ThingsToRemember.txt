@@ -261,3 +261,17 @@ has TrieNode root in the Trie class
 791. Custom Sort String
 Use bucket solution
 (char)('a'+i) could be used to convert int to char
+
+775. Global and Local Inversions
+every local inversion is also a global inversion
+so “local inversions == global inversions” can be interpreted as “there are only local inversions”
+if there are only local inversions, the array will be sorted after making all local inversions
+if there are inversions that are not local, the array won’t be sorted after making all local inversions
+remember to set i = i+2 after swap
+
+771. Jewels and Stones
+make sure int bucket[] = new int[128];
+
+763. Partition Labels
+make sure max(max, hash[i]) to get the updated end;
+check current i == end
