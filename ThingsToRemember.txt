@@ -280,3 +280,8 @@ check current i == end
 try to get the count of 1s in the binary;
 1 is not prime and 2 is the primary, make sure handle that in the isPrime method
 for(int i = 2; i*i <= num;i++){
+
+746. Min Cost Climbing Stairs
+//min cost to climb to i-th step
+int mem[] = new int[cost.length+1];
+or using dp: dp1, dp2
