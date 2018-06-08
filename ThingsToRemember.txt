@@ -275,3 +275,8 @@ make sure int bucket[] = new int[128];
 763. Partition Labels
 make sure max(max, hash[i]) to get the updated end;
 check current i == end
+
+762. Prime Number of Set Bits in Binary Representation
+try to get the count of 1s in the binary;
+1 is not prime and 2 is the primary, make sure handle that in the isPrime method
+for(int i = 2; i*i <= num;i++){
