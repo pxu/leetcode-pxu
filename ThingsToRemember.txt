@@ -307,3 +307,7 @@ public boolean remove(int val) {
         return true;
         
     }
+
+297. Serialize and Deserialize Binary Tree
+Used preorder to serialize the tree
+used queue to deserialize the tree
