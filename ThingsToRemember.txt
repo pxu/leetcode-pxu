@@ -285,3 +285,25 @@ for(int i = 2; i*i <= num;i++){
 //min cost to climb to i-th step
 int mem[] = new int[cost.length+1];
 or using dp: dp1, dp2
+
+380. Insert Delete GetRandom O(1)
+public boolean remove(int val) {
+        // write your code here
+        if(!posMap.containsKey(val)){
+            return false;
+        }
+        
+        Integer lastVal = list.get(list.size()-1);
+        int posLast = posMap.get(lastVal);
+        int posOfVal = posMap.get(val);
+        
+        if(posLast != posOfVal){
+            posMap.put(lastVal, posOfVal);
+            list.set(posOfVal,lastVal);
+        }
+        
+        list.remove(list.size()-1);
+        posMap.remove(val);
+        return true;
+        
+    }
