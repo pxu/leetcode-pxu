@@ -311,3 +311,17 @@ public boolean remove(int val) {
 297. Serialize and Deserialize Binary Tree
 Used preorder to serialize the tree
 used queue to deserialize the tree
+
+235. Lowest Common Ancestor of a Binary Search Tree
+make sure return when root = p or q
+
+236. Lowest Common Ancestor of a Binary Tree
+TreeNode left = lowestCommonAncestor(root.left, p, q);
+TreeNode right = lowestCommonAncestor(root.right, p, q);
+
+if(left != null && right != null){
+    return root;
+}
+
+234. Palindrome Linked List.txt
+the stack should push data < len/2; skip value check on len/2 and odd len
