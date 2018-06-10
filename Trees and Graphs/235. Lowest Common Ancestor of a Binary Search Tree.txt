@@ -48,9 +48,9 @@ class Solution {
         }
         
         int rootVal = root.val;
-        if(rootVal >= p.val && root.val <= q.val){
+        if(root ==p || root == q || (rootVal < q.val && rootVal > p.val)){
             return root;
-        }else if(rootVal >= q.val){
+        }else if(rootVal > q.val){
             return lowestCommonAncestor(root.left, p, q);
         }else{
             return lowestCommonAncestor(root.right, p, q);
