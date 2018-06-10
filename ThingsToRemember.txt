@@ -325,3 +325,6 @@ if(left != null && right != null){
 
 234. Palindrome Linked List.txt
 the stack should push data < len/2; skip value check on len/2 and odd len
+
+92. Reverse Linked List II
+find preM, mNode and nNode postion and keep on move mNode after nNode, and point mNode to preM.next, util mNode == nNode
