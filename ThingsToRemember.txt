@@ -344,3 +344,18 @@ for(int i = 0; i <= rowIndex; i++){
         res.set(j, res.get(j-1) + res.get(j));
     }
 }
+
+684. Redundant Connection
+public boolean union(int x, int y){
+            int px = find(x);
+            int py = find(y);
+            
+            if(px == py){
+                return false;
+            }
+            
+            //very important
+            parents[py] = px;
+            
+            return true;
+        }
