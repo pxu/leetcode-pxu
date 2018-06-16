@@ -359,3 +359,13 @@ public boolean union(int x, int y){
             
             return true;
         }
+
+#hash code implementation example
+public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + age;
+    result = prime * result + ((name == null) ? 0 : name.hashCode());
+    result = prime * result + Arrays.hashCode(value);
+    return result;
+}
