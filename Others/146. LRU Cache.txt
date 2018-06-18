@@ -20,7 +20,7 @@ cache.get(1);       // returns -1 (not found)
 cache.get(3);       // returns 3
 cache.get(4);       // returns 4
 
-
+#solution 1: head, tail
 class LRUCache {
     private class Node{
         int key;
@@ -96,6 +96,70 @@ class LRUCache {
                 deleteNode(last);
                 map.remove(last.key);
             }
+    }
+}
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
+
+solution 2: linkedList
+class LRUCache {
+    private class Node{
+        int key;
+        int val;
+        
+        public Node(int key, int val){
+            this.key = key;
+            this.val = val;
+        }
+    }
+    
+    Map<Integer, Node> cache;
+    LinkedList<Node> cache_values;
+    int capacity;
+    
+    public LRUCache(int capacity) {
+        cache = new HashMap<>(capacity);
+        cache_values = new LinkedList<>();
+        this.capacity = capacity;
+    }
+    
+    public int get(int key) {
+        if(!cache.containsKey(key)){
+            return -1;
+        }
+        
+        Node node = cache.get(key);
+        cache_values.remove(node);
+        cache_values.addFirst(node);
+        return node.val;
+        
+    }
+    
+    public void put(int key, int value) {
+        Node node = cache.get(key);
+        
+        if(node == null){
+            evictIfApplicable();
+            node = new Node(key, value);
+            cache.put(key,node);
+            cache_values.addFirst(node);
+        }else{
+            node.val = value;
+            cache_values.remove(node);
+            cache_values.addFirst(node);
+        }
+    }
+    
+    private void evictIfApplicable(){
+        if(cache.size() >= capacity){
+            Node last = cache_values.removeLast();
+            cache.remove(last.key);
+        }
     }
 }
 
