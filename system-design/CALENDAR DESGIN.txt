@@ -1,0 +1,38 @@
+Linkedin有个系统设计题：
+设计日历（不考虑重复事件，用户少）
+
+这是网上看到的面经。不大明白题意，网上搜到的资料也很少。
+请问这个问题的答题点是什么？
+
+谢谢！
+这个问题比较大，在面试的时候我们可以先设计一个简单的Calendar，然后逐渐优化，正如这里所说的不考虑重复事件，用户少。
+
+我们要看Calendar支持哪些功能
+
+列出年月日，当前这周，当前这个月根据当前的日期
+
+支持放一个event在calendar上，放入event上之后，你可以加入某人到这个event中，并且给他发notification
+
+支持放一个周期性的event（如题目描述这个不需要考虑）
+
+event来临前的提醒，比如前10分钟你需要发出提醒
+
+把events按照时间线列在calendar上
+
+以上是我们大概需要实现的功能，比如Google calendar功能非常丰富，实际上我们是不需要在面试中一一列出来的，列出主要的即可
+
+开始设计table (也就是数据库的schema)
+
+User profile 用户的基本信息table是需要的，存user id，user email（需要发邮件邀请加入event），user nick
+Events table 对于每一个被创建的event,我们需要有一个记录，这个event的title，时间（什么时候开始，什么时候结束），description（event的大致描述），status (表示是否提醒过)等等
+Attend table， 一旦一个user进入一个event，那么我们就创建<event_id, user_id>这样一个关联，那么对于这个event有哪些人参数我们可以做一个query得到，同样的，一个人参与了哪些events，也可以用一个query得到。当然你也可以把参与的人存入Events table当中，不需要这个关联。
+storage 存储介质：
+
+我们可以选择SQL 也可以选择NOSQL来存（正如题目描述中的，user并不是很多）
+实现notify功能
+
+我们可以实现一个消息队列，把快要开始的而且status是没有提醒过的events丢进消息队列中，消息队列的头部负责查看是否刚好是十分中，如果是的，那么就推一个notification给用户，提醒到event马上就要开始了。
+实现邀请功能
+
+一旦你把一些人加入到这个event中，那么我们给用户一个提示，是否要发邮件给这些人，所以我们还需要实现一个邮件发送的功能。
+差不多，以上这些就可以实现一个简单的calendar系统
