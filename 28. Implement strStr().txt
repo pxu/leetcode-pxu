@@ -1,0 +1,64 @@
+Implement strStr().
+
+Return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
+
+Example 1:
+
+Input: haystack = "hello", needle = "ll"
+Output: 2
+Example 2:
+
+Input: haystack = "aaaaa", needle = "bba"
+Output: -1
+Clarification:
+
+What should we return when needle is an empty string? This is a great question to ask during an interview.
+
+For the purpose of this problem, we will return 0 when needle is an empty string. This is consistent to C's strstr() and Java's indexOf().
+
+public class Solution {
+    /*
+     * @param source: source string to be scanned.
+     * @param target: target string containing the sequence of characters to match
+     * @return: a index to the first occurrence of target in source, or -1  if target is not part of source.
+     */
+    public int strStr(String source, String target) {
+        // write your code here
+
+        if(source != null && target != null){
+            if(source.isEmpty() && target.isEmpty()){
+                return 0;
+            }
+            if(target.length() > source.length()){
+                return -1;
+            }
+            
+            for(int i = 0; i < source.length();i++){
+                
+               if(findTarget(source, i, target)) {
+                   return i;
+               }
+               
+            }
+        }
+        
+        return -1;
+    }
+    
+    public boolean findTarget(String source, int start, String target){
+        int len = source.length();
+        
+        if(len - start < target.length()){
+            return false;
+        }
+        
+        for(int i = start; i < start+target.length(); i++){
+            if(source.charAt(i) != target.charAt(i-start)){
+                return false;
+            }
+            
+        }
+        
+        return true;
+    }
+}
