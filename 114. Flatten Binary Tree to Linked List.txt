@@ -59,3 +59,50 @@ class Solution {
     }
 }
 
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+
+solution 2:Go down through the left, when right is not null, push right to stack.
+public class Solution {
+    /**
+     * @param root: a TreeNode, the root of the binary tree
+     * @return: nothing
+     */
+    public void flatten(TreeNode root) {
+        // write your code here
+        if(root == null){
+            return;
+        }
+        
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode curr = root;
+        
+        while(!stack.isEmpty() || curr != null){
+            if(curr.right != null){
+                stack.push(curr.right);
+            }
+            
+            if(curr.left != null){
+                curr.right = curr.left;
+                curr.left = null;
+            }else if(!stack.isEmpty()){
+                TreeNode temp = stack.pop();
+                curr.right = temp;
+            }
+           
+           curr = curr.right;
+        }
+        
+    }
+    
+    
+}
