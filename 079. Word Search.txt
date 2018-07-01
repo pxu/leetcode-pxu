@@ -66,3 +66,88 @@ class Solution {
         }
     }
 }
+
+
+solution 2: trie
+public class Solution {
+    
+    class Trie{
+        Trie children[] = new Trie[256];
+        boolean isEnd = false;
+    }
+    
+    Trie root = new Trie();
+    
+    int dirs[][] = {{-1,0},{0,1},{1,0},{0,-1}};
+    
+    private void loadTrie(String word){
+        Trie curr = root;
+        
+        for(char c: word.toCharArray()){
+            if(curr.children[c] == null){
+                curr.children[c] =  new Trie();
+            }
+            
+            curr = curr.children[c];
+        }
+        
+        curr.isEnd = true;
+        
+    }
+    /**
+     * @param board: A list of lists of character
+     * @param word: A string
+     * @return: A boolean
+     */
+    public boolean exist(char[][] board, String word) {
+        // write your code here
+
+        int rows = board.length;
+        int cols = board[0].length;
+        int status[][] = new int[rows][cols];
+        loadTrie(word);
+        
+        for(int row = 0 ; row < rows ; row++){
+            for(int col = 0; col < cols; col++){
+                if(dfs(board, root, row,col, status)){
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+    
+    public boolean dfs(char[][] board, Trie trie, int row, int col, int status[][]){
+
+        if(row < 0 || row  >=board.length || col < 0 || col >= board[0].length || status[row][col] == 1){
+            return false;
+        }
+        
+        char currChar = board[row][col];
+        
+        if(trie.children[currChar] == null){
+            return false;
+        }
+        
+        trie = trie.children[currChar];
+        if(trie.isEnd){
+            return true;
+        }
+        
+        status[row][col] = 1;
+        for(int dir[]: dirs ){
+            int newRow = row + dir[0];
+            int newCol = col + dir[1];
+            
+            if(dfs(board, trie, newRow, newCol, status)){
+                return true;
+            }
+            
+        }
+        status[row][col] = 0;
+        
+        return false;
+        
+    }
+}
