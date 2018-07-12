@@ -39,7 +39,9 @@ public class Solution {
     public int countPrimes(int n) {
         // write your code here
         int count[] = new int[n];
-   
+        //numbers are prime if the only divisors they have are 1 and itself,
+        //you really only have to go up to the square root of n, because 
+        //if you list out all of the factors of a number, the square root will always be in the middle
         for(int i = 2; i*i < n; i++ ){
             for(int j = 2; i*j< n; j++){
                 count[i*j] = -1;
