@@ -28,7 +28,7 @@ class Solution {
         StringBuilder sb = new StringBuilder();
         
         while(n> 0){
-            n--;
+            n--;//You can think of the -1 part as changing from 1-based index to 0-based index.
             sb.insert(0, (char)('A' + n%26));
             n = n/26;
         }
