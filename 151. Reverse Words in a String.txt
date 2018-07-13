@@ -1,0 +1,71 @@
+Given an input string, reverse the string word by word.
+
+Example:  
+
+Input: "the sky is blue",
+Output: "blue is sky the".
+Note:
+
+A word is defined as a sequence of non-space characters.
+Input string may contain leading or trailing spaces. However, your reversed string should not contain leading or trailing spaces.
+You need to reduce multiple spaces between two words to a single space in the reversed string.
+Follow up: For C programmers, try to solve it in-place in O(1) space.
+
+public class Solution {
+    public String reverseWords(String s) {
+        if(s == null) return null;
+        if(s.length() <= 1) return s.trim();
+        String words[] = s.split("\\s+");
+        StringBuilder sb = new StringBuilder();
+        for(int i= words.length-1; i>=0; i--){
+            sb.append(words[i]);
+            sb.append(" ");
+        }
+        
+        return sb.toString().trim();
+    }
+}
+
+public class Solution {
+    /*
+     * @param s: A string
+     * @return: A string
+     */
+    public String reverseWords(String s) {
+        // write your code here
+        if(s == null) return s;
+        
+        if(s.length() < 2) {
+            return s.trim();
+        }
+        
+        char strs[] = s.toCharArray();
+        int len = strs.length;
+        
+        reverse(strs,0, len -1);
+        
+        int left = 0, right = 0;
+        for(int j = 0; j < len; j++){
+            if(strs[j] != ' '){
+                strs[right++] = strs[j];
+            }else if(j > 0 && strs[j-1] != ' '){
+                reverse(strs, left, right-1);
+                strs[right++] = ' ';
+                left = right;
+                
+            }
+        }
+        
+        reverse(strs, left, right-1);
+        int end = right > 0 && strs[right-1] == ' '?right-1: right;
+        return new String(strs, 0, end);
+    }
+    
+    private void reverse(char strs[], int left, int right){
+        while(left < right){
+            char temp = strs[left];
+            strs[left++] = strs[right];
+            strs[right--] = temp;
+        }
+    }
+}
