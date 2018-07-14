@@ -16,6 +16,43 @@ What should we return when needle is an empty string? This is a great question t
 
 For the purpose of this problem, we will return 0 when needle is an empty string. This is consistent to C's strstr() and Java's indexOf().
 
+class Solution {
+    public int strStr(String haystack, String needle) {
+        if(haystack == null || haystack.length() == 0){
+              if(needle == null || needle.length() == 0){
+                  return 0;
+              }else{
+                  return -1;
+              }
+        }
+       /*
+         if(needle == null || needle.length() == 0){
+             return 0;
+        }*/
+        
+        int hLen = haystack.length();
+        int nLen = needle.length();
+        if(hLen < nLen) return -1;
+        boolean successful = true;
+        
+        for(int hIndex = 0; hIndex < (hLen-nLen+1); hIndex++){
+            successful = true;
+            for(int nIndex = 0; nIndex< nLen; nIndex++){
+                if(haystack.charAt(nIndex + hIndex) != needle.charAt(nIndex)){
+                    successful = false;
+                    break;
+                }
+            }
+            if(successful == true){
+                return hIndex;
+            }
+            
+        }
+        return -1;
+    }
+}
+
+
 public class Solution {
     /*
      * @param source: source string to be scanned.

@@ -1,0 +1,35 @@
+ Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
+
+Note: For the purpose of this problem, we define empty string as valid palindrome.
+
+Example 1:
+
+Input: "A man, a plan, a canal: Panama"
+Output: true
+Example 2:
+
+Input: "race a car"
+Output: false
+
+ 
+ if(s == null || s.length() == 0) return true;
+        
+        char chars[] = s.toCharArray();
+        int left = 0, right =chars.length-1;
+        
+        while(left < right){
+            while(left < right && !Character.isLetterOrDigit(chars[left])) left++;
+            while(left < right && !Character.isLetterOrDigit(chars[right])) right--;
+            
+            if(left < right){
+                if(Character.toLowerCase(chars[left]) == Character.toLowerCase(chars[right])){
+                    left++;
+                    right--;
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+        
+        return true;

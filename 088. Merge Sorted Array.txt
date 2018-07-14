@@ -1,0 +1,73 @@
+Given two sorted integer arrays nums1 and nums2, merge nums2 into nums1 as one sorted array.
+
+Note:
+
+The number of elements initialized in nums1 and nums2 are m and n respectively.
+You may assume that nums1 has enough space (size that is greater or equal to m + n) to hold additional elements from nums2.
+Example:
+
+Input:
+nums1 = [1,2,3,0,0,0], m = 3
+nums2 = [2,5,6],       n = 3
+
+Output: [1,2,2,3,5,6]
+
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int newLen = m + n;
+        int index1 = m-1, index2 = n-1;
+        
+        for(int i = newLen-1; i >=0; i--){
+            if(index1 >= 0 && index2>=0){
+                if(nums1[index1] <= nums2[index2]){
+                    nums1[i] = nums2[index2];
+                    index2--;
+                }else{
+                    nums1[i] = nums1[index1];
+                    index1--;
+                }
+            }else{
+                if(index1 < 0){
+                    nums1[i] = nums2[index2];
+                    index2--;
+                }else{
+                   return;
+                }
+            }
+        }
+    }
+}
+
+
+public class Solution {
+    /*
+     * @param A: sorted integer array A which has m elements, but size of A is m+n
+     * @param m: An integer
+     * @param B: sorted integer array B which has n elements
+     * @param n: An integer
+     * @return: nothing
+     */
+    public void mergeSortedArray(int[] A, int m, int[] B, int n) {
+        // write your code here
+        
+        int indexA = m-1, indexB= n-1, index = m+n-1;
+        
+        while(indexA >=0 && indexB >= 0){
+            if(A[indexA] <= B[indexB]){
+                A[index--] = B[indexB--];
+            }else{
+                A[index--] = A[indexA--];
+            }
+        }
+        
+        if(indexA >=0 ){
+            return;
+        }
+        
+        while(indexB >= 0){
+            A[index--] = B[indexB--];
+        }
+        
+
+    }
+}

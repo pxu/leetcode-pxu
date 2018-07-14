@@ -101,19 +101,9 @@ class Solution {
         if(grid == null || grid.length == 0){
             return 0;
         }
-        
-        
         int rows = grid.length;
         int cols = grid[0].length;
         int count = 0;
-        
-        for(int row = 0; row < rows; row++){
-            for(int col = 0; col < cols; col++){
-                 if(grid[row][col] == '1'){
-                     count++;
-                 }
-            }
-        }
        
         UnionFind uf = new UnionFind(rows, cols);
         
@@ -121,6 +111,7 @@ class Solution {
             for(int col = 0; col < cols; col++){
                 
                 if(grid[row][col] == '1'){
+                    count++;
                     for(int dir[]: dirs){
                         int newRow = row + dir[0];
                         int newCol = col + dir[1];
@@ -128,7 +119,6 @@ class Solution {
                             if(uf.union(cols*newRow + newCol,cols*row + col)){
                                 count--;
                             }
-                           
                         }
                     }
                 }
@@ -137,6 +127,5 @@ class Solution {
         }
         return count;
     }
-    
 }
 
