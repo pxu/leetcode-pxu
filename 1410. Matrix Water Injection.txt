@@ -1,0 +1,128 @@
+Description
+Given a two-dimensional matrix, the value of each grid represents the height of the terrain. The flow of water will only flow up, down, right and left, and it must flow from the high ground to the low ground. As the matrix is surrounded by water, it is now filled with water from (R,C) and asked if water can flow out of the matrix.
+
+The input matrix size is n x n, n <= 200.
+Ensure that each height is a positive integer.
+Have you met this question in a real interview?  
+Example
+Given
+
+mat =
+[
+    [10,18,13],
+    [9,8,7],
+    [1,2,3]
+]
+R = 1, C = 1, return "YES"。
+
+Explanation:
+(1,1) →(1,2)→Outflow.
+Given
+
+mat = 
+[
+    [10,18,13],
+    [9,7,8],
+    [1,11,3]
+]
+R = 1, C = 1, return "NO"。
+
+Explanation:
+Since (1,1) cannot flow to any other grid, it cannot flow out.
+
+public class Solution {
+    /**
+     * @param matrix: the height matrix
+     * @param R: the row of (R,C)
+     * @param C: the columns of (R,C)
+     * @return: Whether the water can flow outside
+     */
+     
+    int dirs[][] = {{-1,0},{0,1},{1,0},{0,-1}};
+    private static String YES = "YES";
+    private static String NO = "NO";
+    
+    public String waterInjection(int[][] matrix, int R, int C) {
+        // Write your code here
+        if(matrix == null || matrix.length == 0) return NO;
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        boolean status[][] = new boolean[rows][cols];
+        return dfs(matrix,R,C,status);
+    }
+    
+    private String dfs(int[][] matrix, int row, int col, boolean status[][]){
+        if(row == matrix.length -1 || row == 0 || col == 0 || col == matrix[0].length-1) return YES;
+        if(status[row][col]) return NO;
+        
+        status[row][col] = true;
+        
+        for(int dir[]:dirs){
+            int newRow = row + dir[0];
+            int newCol = col + dir[1];
+            if(newRow >= 0 && newRow < matrix.length && newCol >=0 && newCol < matrix[0].length && matrix[row][col] > matrix[newRow][newCol]){
+                if(dfs(matrix,row+dir[0], col+dir[1], status).equals(YES)){
+                    return YES;
+                }
+            }
+        }
+        
+        return NO;
+    }
+}
+
+public class Solution {
+    /**
+     * @param matrix: the height matrix
+     * @param R: the row of (R,C)
+     * @param C: the columns of (R,C)
+     * @return: Whether the water can flow outside
+     */
+    class Point{
+        int x;
+        int y;
+        public Point(int x, int y){
+            this.x = x;
+            this.y = y;
+        }
+    }     
+    int dirs[][] = {{-1,0},{0,1},{1,0},{0,-1}};
+    public String waterInjection(int[][] matrix, int R, int C) {
+        // Write your code here
+        if(matrix == null || matrix.length == 0){
+            return "NO";
+        }
+        int rows = matrix.length;
+        int cols = matrix[0].length; 
+        int status[][] = new int[rows][cols];
+        Stack<Point> stack = new Stack<>();
+        stack.push(new Point(R,C));
+        status[R][C] = 1;
+        
+        while(!stack.isEmpty()){
+            Point p = stack.pop();
+            if(p.x == 0 || p.x == (rows-1) || p.y == 0 || p.y == (cols-1)){
+                return "YES";
+            }
+            
+            for(int dir[]:dirs){
+                int newRow = p.x + dir[0];
+                int newCol = p.y + dir[1];
+                
+                if(newRow < 0 || newRow >= rows || newCol < 0 || newCol >= cols){
+                    continue;
+                }
+                
+                if(matrix[p.x][p.y] > matrix[newRow][newCol] && status[newRow][newCol] == 0){
+                    stack.push(new Point(newRow, newCol));
+                    status[newRow][newCol] = 1;
+                }
+            }
+        }
+        
+        return "NO";
+        
+        
+        
+    }
+}
