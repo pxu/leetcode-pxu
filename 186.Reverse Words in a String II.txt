@@ -12,7 +12,45 @@ The words are always separated by a single space.
 Follow up: Could you do it in-place without allocating extra space?
 
 
-Solution:
+public class Solution {
+    /**
+     * @param str: a string
+     * @return: return a string
+     */
+    public char[] reverseWords(char[] str) {
+        // write your code here
+        // write your code here
+        if(str == null || str.length < 2) {
+            return str;
+        }
+        
+        int len = str.length;
+        reverse(str,0, len -1);
+        int left = 0;
+        for(int right = 0; right < len; right++){
+            if(str[right] == ' '){
+                reverse(str,left, right-1);
+                left = right+1;
+            }
+            //straight forward to handle len - 1 case
+            if(right == len - 1){
+                reverse(str,left, right);
+            }
+            
+        }
+        return str;
+    }
+    
+    private void reverse(char strs[], int low, int high){
+        while(low < high){
+            char temp = strs[low];
+            strs[low++] = strs[high];
+            strs[high--] = temp;
+        }
+    }
+}
+
+Solution 1: version 2
 class Solution {
     public void reverseWords(char[] str) {
         if(str == null || str.length <2){
