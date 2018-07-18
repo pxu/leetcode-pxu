@@ -40,7 +40,30 @@ class Solution {
     }
 }
 
-solution 2: recursion
+solution 2: recursion -version 1:
+class Solution {
+    public int findMin(int[] nums) {
+        //if(nums == null || nums.length == 0) ;
+        int len = nums.length;
+        int left = 0, right = len -1;
+        return findMinRec(nums, left, right);
+    }
+    
+    public int findMinRec(int[] nums, int left, int right){
+        
+        if(nums[left] <= nums[right]) return nums[left];
+        
+        int mid = left + (right-left)/2;
+        
+        if(nums[mid] >= nums[left]){
+            return findMinRec(nums, mid+1, right);
+        }
+       
+        return findMinRec(nums, left, mid);
+    }
+}
+
+solution 2: recursion -version 2:
 class Solution {
     public int findMin(int[] nums) {
         if(nums == null || nums.length == 0){
