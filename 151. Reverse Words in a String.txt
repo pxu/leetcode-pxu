@@ -44,21 +44,23 @@ public class Solution {
         
         reverse(strs,0, len -1);
         
-        int left = 0, right = 0;
-        for(int j = 0; j < len; j++){
-            if(strs[j] != ' '){
-                strs[right++] = strs[j];
-            }else if(j > 0 && strs[j-1] != ' '){
+        int left = 0, right= 0;
+        
+        for(int i = 0;i < len; i++){
+            if(strs[i] != ' '){
+                strs[right++] = strs[i];
+                if(i == len -1){
+                    reverse(strs, left, right-1);
+                }
+            }else if(i > 0 && strs[i-1] != ' '){
                 reverse(strs, left, right-1);
                 strs[right++] = ' ';
                 left = right;
-                
             }
         }
         
-        reverse(strs, left, right-1);
-        int end = right > 0 && strs[right-1] == ' '?right-1: right;
-        return new String(strs, 0, end);
+        int end = right >0 && strs[right-1] == ' '?right-1: right;
+        return  new String(strs, 0, end);
     }
     
     private void reverse(char strs[], int left, int right){

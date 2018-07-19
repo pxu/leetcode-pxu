@@ -16,6 +16,75 @@ words = ["oath","pea","eat","rain"] and board =
 Output: ["eat","oath"]
 Note:
 You may assume that all inputs are consist of lowercase letters a-z.
+solution 1: version 1:
+class Solution {
+    int dirs[][] = {{-1,0},{0,1},{1,0},{0,-1}};
+    private class Trie{
+        Trie children[] = new Trie[26];
+        String word;
+    }
+    Trie root = new Trie();
+    private void addWord(String word){
+        Trie curr = root;
+        for(char c: word.toCharArray()){
+            if(curr.children[c-'a'] == null){
+                curr.children[c-'a'] = new Trie();
+            }
+            curr = curr.children[c-'a'];
+        }
+        curr.word = word;
+    }
+    
+    public List<String> findWords(char[][] board, String[] words) {
+        List<String> res = new ArrayList<>();
+        if(board == null || board.length == 0 || words == null || words.length ==0 ) return res;
+        
+        for(String word: words){
+            addWord(word);
+        }
+        
+        int rows = board.length;
+        int cols = board[0].length;
+        
+        boolean status[][] = new boolean[rows][cols];
+        
+        for(int row = 0; row < rows; row++){
+            for(int col = 0; col < cols; col++){
+                dfs(res, board, root, status, row, col);
+            }
+        }
+        
+        return res;
+        
+    }
+    
+    public void dfs(List<String> res, char[][] board, Trie trie, boolean[][] status, int row, int col){
+       
+        
+        char c = board[row][col];
+        if(trie.children[c-'a'] == null) return;
+        
+        trie = trie.children[c-'a'];
+        
+        if(trie.word != null){
+            res.add(trie.word);
+            trie.word = null;
+        }
+        
+        status[row][col] = true;
+        for(int dir[]: dirs){
+            int newRow = row+dir[0];
+            int newCol= col+dir[1];
+             if(newRow >=0 && newRow < board.length && newCol >= 0 && newCol < board[0].length && status[newRow][newCol] == false){
+                dfs(res, board, trie, status, newRow , newCol);
+             }
+        }
+        status[row][col] = false;
+        
+    }
+}
+
+solution 1: version 2
 
 class Solution {
     int dirs[][] = {{0,-1},{-1,0},{0,1},{1,0}};

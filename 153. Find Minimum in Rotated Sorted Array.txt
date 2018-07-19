@@ -14,7 +14,56 @@ Example 2:
 
 Input: [4,5,6,7,0,1,2]
 Output: 0
+solution 1: iteration
+class Solution {
+    public int findMin(int[] nums) {
+        //if(nums == null || nums.length == 0) ;
+        int len = nums.length;
+        int left = 0, right = len -1;
+        
+        while(left+1 < right){
+            int mid = left + (right-left)/2;
+            
+            if(nums[mid] > nums[left]){
+                if(nums[mid] < nums[right]){
+                    return nums[left];
+                }else{
+                    left = mid;
+                }
+            }else{
+                right = mid;
+            }
+        }
+        
+        return Math.min(nums[left], nums[right]);
+        
+    }
+}
 
+solution 2: recursion -version 1:
+class Solution {
+    public int findMin(int[] nums) {
+        //if(nums == null || nums.length == 0) ;
+        int len = nums.length;
+        int left = 0, right = len -1;
+        return findMinRec(nums, left, right);
+    }
+    
+    public int findMinRec(int[] nums, int left, int right){
+        
+        if(nums[left] <= nums[right]) return nums[left];
+        
+        int mid = left + (right-left)/2;
+        
+        if(nums[mid] >= nums[left]){
+            return findMinRec(nums, mid+1, right);
+        }
+       
+        return findMinRec(nums, left, mid);
+    }
+}
+
+solution 2: recursion -version 2:
 class Solution {
     public int findMin(int[] nums) {
         if(nums == null || nums.length == 0){

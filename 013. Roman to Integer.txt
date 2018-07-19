@@ -40,9 +40,49 @@ Input: "MCMXCIV"
 Output: 1994
 Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
 
+solution 1: version 1
 /**
  Just check if the current character has a smaller value than the next character. If so, use the subtractive rule, otherwise just adds its value and continue.
 */
+class Solution {
+    public int romanToInt(String s) {
+        if(s == null || s.length() == 0) return 0;
+        
+        Map<Character,Integer> map = new HashMap<>();
+        map.put('I',1);
+        map.put('V',5);
+        map.put('X',10);
+        map.put('L',50);
+        map.put('C',100);
+        map.put('D',500);
+        map.put('M',1000);
+        
+        int res = 0;
+        for(int i = 0; i < s.length();){
+            char curr = s.charAt(i);
+            if(i == s.length()-1){
+                res += map.get(curr);
+                i++;
+            }else{
+                char next = s.charAt(i+1);
+                if(map.get(curr) < map.get(next)){
+                    res += map.get(next) - map.get(curr);
+                    i = i+2;
+                }else{
+                    res += map.get(curr);
+                    i++;
+                }
+                
+            }
+        }
+        
+        return res;
+    }
+}
+
+
+solution 1: version 2
+
 class Solution {
     public int romanToInt(String s) {
         if(s == null || s.isEmpty()){
