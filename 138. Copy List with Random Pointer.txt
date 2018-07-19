@@ -30,3 +30,53 @@ public class Solution {
         return map.get(head);
     }
 }
+
+solution 2: next next, Time Complexity O(n), Space Complexity O(1)
+/**
+ * Definition for singly-linked list with a random pointer.
+ * class RandomListNode {
+ *     int label;
+ *     RandomListNode next, random;
+ *     RandomListNode(int x) { this.label = x; }
+ * };
+ */
+public class Solution {
+    public RandomListNode copyRandomList(RandomListNode head) {
+        RandomListNode curr = head;
+        RandomListNode dummy = new RandomListNode(-1);
+        RandomListNode dummyHead = dummy;
+        
+        //first round, copy next
+        while(curr != null){
+            RandomListNode next = curr.next;
+            
+            RandomListNode copy = new RandomListNode(curr.label);
+            curr.next = copy;
+            copy.next = next;
+            
+            curr = next;
+        }
+        
+        curr = head;
+        while(curr != null){
+            RandomListNode random = curr.random;
+            if(random != null){
+                curr.next.random = curr.random.next;
+            }
+            
+            curr = curr.next.next;
+        }
+        
+        curr = head;
+        while(curr != null){
+            RandomListNode next = curr.next.next;
+            dummyHead.next = curr.next;
+            dummyHead = dummyHead.next;
+            
+            curr.next = next;
+            curr = curr.next;
+        }
+        
+        return dummy.next;
+    }
+}
