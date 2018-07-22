@@ -1,0 +1,62 @@
+Given an unsorted array of integers, find the length of longest increasing subsequence.
+
+Example:
+
+Input: [10,9,2,5,3,7,101,18]
+Output: 4 
+Explanation: The longest increasing subsequence is [2,3,7,101], therefore the length is 4. 
+Note:
+
+There may be more than one LIS combination, it is only necessary for you to return the length.
+Your algorithm should run in O(n2) complexity.
+Follow up: Could you improve it to O(n log n) time complexity?
+solution 1: dp
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        if(nums == null) return 0;
+        
+        if( nums.length < 2) return nums.length;
+        int len = nums.length;
+        int dp[] = new int[len];
+        dp[0] = 1;
+        int maxRes = 0;
+        
+        for(int i = 1; i< len; i++){
+            int maxVal = 0;
+            for(int j = 0; j < i; j++){
+                if(nums[i] > nums[j]){
+                    maxVal = Math.max(maxVal, dp[j]);
+                }
+            }
+            
+            dp[i] = Math.max(maxVal + 1,dp[i]);
+            maxRes = Math.max(dp[i], maxRes);
+        }
+        
+        
+        return maxRes;
+    }
+}
+
+solution 2: time limit exceeding
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        if(nums == null) return 0;
+        if( nums.length < 2) return nums.length;
+       
+        return helper(nums, Integer.MIN_VALUE, 0);
+    }
+    
+    private int helper(int[] nums, int prev, int currPos){
+        if(currPos == nums.length) return 0;
+        int taken = 0, notTaken = 0;
+        
+        if(nums[currPos] > prev){
+            taken = 1 + helper(nums, nums[currPos], currPos+1);
+        }
+        
+        notTaken = helper(nums, prev, currPos+1);
+        return Math.max(taken, notTaken);
+        
+    }
+}
