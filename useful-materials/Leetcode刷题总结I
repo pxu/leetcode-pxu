@@ -1,0 +1,628 @@
+Leetcode刷题总结I
+W wuyuzhe1989 2年之前
+用了几天，把刷过的Leetcode的题目总结了一下（不包括带锁的题目和最新的题目）， 希望用一句或几句话把题目思路说清楚，还没有总结DP相关的内容，贴出来和大家分享一下，欢迎讨论，也为太阁会员抽奖赞赞人品，转载请注明出处。
+
+Math and Bit Manipulation
+
+Reverse Integer
+Do in one iteration, remember boundary Check
+Palindrome Integer
+Compare digit in head and tail
+Divide two Integer
+Binary Search
+Multiply String
+Do it as Math
+Pow(x,n)
+Fast Exponential, consider n might be negative
+Permutation Sequence
+Find the right bucket
+Plus one
+Carrier
+Add Binary
+Carrier
+Sqrt(x)
+Binary Search or (i = 0x5f3759df - ( i >> 1 ))
+10 Single Number
+XOR
+Single Number II
+3XOR
+Fraction to recurring decimal
+被除数出现重复时，循环出现
+Excel Sheet Column title
+26进制转化
+Excel Sheet Column number
+26进制转化
+Factorial Trailing zeros
+Count 5’s times
+Reverse bit
+Dividend and conquer and combine with bit operation
+Number of 1 bits
+while(n > 0) n = n & (n - 1); count ++
+Bitwise AND of numbers range
+Give m and n, return the result of m & m + 1 & m + 2 & m + 3 … & n
+Answer is Common prefix of two numbers
+Count prime
+Use Array to mark out non-prime number
+Rectangle area
+4 point defines two rectangle, calculate the rectangle area
+Sum of two rectangle - overlap of two rectangle
+Power of two
+n & (n - 1)
+Number of Digit one
+Count with bucket
+Add Digits
+Possible answer is 1 to 9. 1 + (num - 1) % 9
+Single Number 3
+XOR
+Ugly Number 1
+Check if given number is ugly number or not
+Ugly Number 2
+Return nth ugly number, use heap(common heap or 3 heaps) to track the current smallest ugly number
+Missing Number
+XOR
+Perfect square
+Given a number, return how many perfect square number can sum up to it
+DP
+Self crossing
+Divided to 3 scenario
+Power of 4
+Power of 2 + even number of trailing zero (num - 1 and count digit 1)
+Power of 3
+判断是否可以被最大的3的次方整除
+Bulb Switcher
+Count numbers with Unique Digits
+Given a non-negative integer n, count all numbers with unique digits, x, where 0 ≤ x < 10n.
+DP
+32 Valid Perfect Square
+perfect square = 1 + 3 + 5 + 7 + ….
+33 Sum of two Integer
+XOR and carrier
+LinkedList
+Add two numbers
+Carrier
+
+Remove Nth Node from End of List
+Fast/Slow pointer
+Merge Two Sorted List
+Merge K LinkedList
+Swap Nodes in Pairs
+Reverse Nodes in K-Group
+Rotate List
+Remove Duplicates from Sorted Linked List
+So that each element only appears once
+Remove Duplicates from Sorted Linked List
+So that all the dup elements are deleted
+Partition List
+Reverse Linked List from m to n
+Copy List with Random Pointer
+Double and separate
+LinkedList Cycle
+Fast/Slow pointer
+LinkedList Cycle II
+complementary
+Reorder List
+L0->L1->…->Ln-1-> Ln to L0->Ln->L1->Ln-1->L2->Ln-2
+Halve the list, reverse the second half and merge two lists
+Intersection of Two Linked List
+Align the beginning parts
+Remove LinkedList Element
+Compare and remove, careful for the head might change
+Palindrome Linked List
+Find the mid element and reverse the first part at same time
+Delete Node in a linkedList
+Without giving the head of list
+Move the value around
+Odd Even LinkedList
+Separate with two list and combine them
+Reverse Linked List
+Sort
+
+Insertion Sort List
+Sort List
+Merge sort and quick sort
+Largest Number String
+redefine comparator (s1s2 and s2s1)
+Maximum Gap
+Bucket Sort concept, max gap happens between buckets
+Binary Search and Sorted Array
+
+Binary Search Template
+
+start = 0; end = len - 1;
+while(start + 1 < len){
+mid = start + (end - start) / 2;
+if(num[mid] == target)
+{
+return mid;
+}
+if(target num[mid])
+{
+start = mid;
+}
+else
+{
+end = mid;
+}
+}
+
+num[start], num[end] ? target
+
+Median of Two Sorted Array	
+Convert to find k-th element in array
+Compare the medians of two array and halve
+Find Minimum in Rotated Sorted Array (No Dup)
+Compare mid with end (consider the input array can be increasing order)
+Find Minimum in Rotated Sorted Array II (has Dup)
+o(n) — Blackbox test
+Search in rotated sorted Array, No dup
+Scenarios with mid in the first half or second half
+Search in rotated sorted Array, has dup
+o(n) — Blackbox test
+Search for a range
+Twice search for the startIndex and endIndex
+Search insert Position
+Insert Position: first position larger than target
+Search a 2D matrix (strictly increase)
+Binary Search for row and column or 2D to array
+Find peak element (no Dup)
+nums[mid] > nums[mid + 1], peak is in left half
+nums[mid] < nums[mid + 1], peak is in right half
+Find Peak element in 2D matrix
+Find the peak in mid row num[mid][j], compare with num[mid + 1][j]
+Search a 2D matrix II (row increase, column increase)
+从左下向右上移动
+a[i][j] < target，向右走，a[i][j] > target, 向上走 O(m + n)
+H-Index:
+H-Index II:
+Input is sorted, compare with the num[mid] (citation count) and length - mid (number of paper has larger citation count)
+
+First Bad Version
+Test if mid is bad version and move pointer accordingly
+Find the Duplicate number
+Given n + 1 number and value is in range: [1, n]. Assume only one dup exists, find it.
+值的二分，统计元素在[start, mid], [mid + 1, end]的分布决定start和end的走向
+
+Binary Tree
+Binary Tree In-order Traversal
+Non-recursion solution
+Validate Binary Search Tree
+Binary Tree In-order traversal
+Recover Binary Search Tree
+Two elements are swap in BST, recover it
+Binary Tree In-order traversal
+Same Tree
+Given two trees, is the same or not
+Symmetric Tree
+Convert to isMirror(root.left, root.right)
+isMirror(A, B) <==> A.val == B.value && isMirror(A.left, B.right) && isMirror(A.right, B.left)
+Binary Tree Level Order Traversal I, II
+Queue and queueSize in each level
+Binary Tree ZigZag Level Order Traversal
+Queue and queueSize in each level
+Maximum Depth of a Binary Tree
+maxDep(root) = Max(maxDep(root.left), maxDep(root.right)) + 1
+Minimum Depth of a Binary Tree
+minDep(root) = Min(minDep(root.left), minDep(root.right)) + 1
+Construct Binary Tree From Preorder and In-order traversal
+Partition Inorder array with Preorder value (left to right)
+Construct Binary Tree From Postorder and In-order traversal
+Partition Inorder array with Postorder value (right to left)
+Convert Sorted Array to Binary Search Tree(Balance Height)
+Use mid index as root, left part as left tree, right part as right tree
+Convert Sorted List to Binary Search Tree(Balance Height)
+Use mid node as root, left part as left tree, right part as right tree
+Balanced Binary Tree
+isBalance(root) <==> isBalance(root.left) && isBalance(root.right) && height(left), height(right) 相差最多1
+Path Sum
+has PathSum = target
+Path Sum II
+return all PathSum = target, need DFS
+Flatten Binary tree to LinkedList
+Tree traverse with non-Recursive way
+Populating next right pointers in each node
+In-order traverse, non-recursive
+Binary Tree Maximum Path Sum
+Recursively return the max Value end with root, meanwhile use global value to record the max value from leaf to leaf
+Sum root to leaf number
+static variable to record the sum
+sumNumber(root, termSum) will recursively consider sumNumber(root.left,10 * (termSum + root.val)) and sumNumber(root.right, 10 * (termSum + root.val))
+Binary Tree Preorder Traversal
+Non-recursive way
+Binary Tree Postorder Traversal
+Recursive way should be fine
+Binary Search Tree Iterator
+In-order traversal, non-recursive
+Binary Tree Right Side View
+Level-order traversal, queueSize as level size
+Count Complete Tree Nodes
+Count number of nodes in complete tree.
+Turn into count the number of leaves. 值二分法查看mid是否是一个leaf
+Invert Binary Tree (左右交换)
+Invert(root) <=> leftInvert = Invert(root.left); rightInvert = Invert(root.right); root.left = rightInvert; root.right = leftInvert;
+
+Nth Smallest Element in BST
+Binary Tree in-order traverse, non-recursive
+
+Least Common Ancestor of Binary Tree
+如果root 下面有node 1, node 2, return LCA; 2. 如果root下面只有node 1 或node 2, return node1 or node2; 3. 如果root下面有没有, return null
+
+Binary Tree Paths
+打印所有Root to leaf paths. DFS, possible next steps are left tree and right tree
+
+Unique Binary Search Tree II
+Given an integer n, generate all structurally unique BST’s that store values 1…n
+Generate possible left tree and right tree and crossing combine those
+
+Serialize and Deserialize Binary Tree
+In-order traverse with null node represent by n, Each term split by ‘,’
+
+Count of Smaller Numbers After Self
+Use balance Binary Search Tree: TreeMap
+
+Count of range Sum
+PreSum: sum(i to j) = preSum[j] - preSum[i - 1], contract BST using PreSum
+iterate preSum array: remove preSum[i] and search for number of element in [preSum[i] + lower, preSum[i] + upper)
+
+Verify Preorder serialization of a Binary Tree
+9,3,4,#,#,1,#,#,2,#,6,#,# is a Preorder of Binary Tree or not
+keep removing X, #, # by #, to see if the array can be transform to # or not
+
+Data Stream as Disjoint Intervals
+Balance Binary Search Tree to search for lower and upper for the new given element, combine interval if needed
+
+二叉树最长路径
+从任意一点(root)出发, BFS走到最远far-end, 再从far-end出发，BFS到最远即为答案。
+
+Remove node in BST (hard!)
+Find the node, 2. Find 左子树最大值替换node. 3. 递归删除左子树最大值
+
+DFS/Backtracing:
+
+Letter Combination of a phone number:
+Use static string array for dictionary
+
+Generate Parenthesis
+Maintain leftCount and rightCount, the possible next step is if leftCount < n, add ‘(‘, if rightCount < leftCount, add ’)’
+
+Sudoku Solver
+For each position, from 1 to 9, decide whether it is valid next steps
+
+Combination Sum (可重复)
+Each candidate can be possible next step
+
+Combination Sum (不可重复)
+Need to detect duplicate
+
+Permutation (Inputs are distinct number)
+Elements which do not in current term are possible next step
+
+Permutation II (inputs may have same number)
+Need to record visited
+
+N-Queue
+Put queue row by row, for each row, choose the valid place as next step.
+
+N-Queue II
+Put queue row by row, mark the board once queue is placed, unmark the board once backtracking
+
+Combinations
+Given two integers n and k, return all possible combinations of k numbers out of 1 … n
+Recursion stops with K, and next possible steps are index to n.
+
+Subsets
+Each node in recursion tree is valid answer
+
+Subsets II (input has duplicate)
+Sort input array and skip same element when finding next step
+
+Word search
+Find the first char in Matrix, possible next steps are up, down, left, right and match the next char in target
+
+Gray code
+n-level gray code is the n-bit set to 1 of n - 1 level gray code
+
+Restore IP address (Lottery Number)
+Next steps are 1 digit, 2 digit 3 digit less than 255.
+Discuss with ‘0’ (one next step), ‘1’ (three next steps), ‘2’ (two or three next steps), ‘3’ to ‘9’ (two next steps)
+
+Path Sum II (Binary Tree, all path Sum = target)
+Possible next step: left tree, right tree
+Palindrome Partitioning
+Next possible steps: All the valid palindrome prefix, need a function to find those
+
+Combination Sum III
+Find all possible combinations of k numbers that add up to a number n, given that only numbers from 1 to 9 can be used and no dup
+index (dup prevent) to 9 are possible next steps
+
+Flatten Nested List Iterator
+Recursive
+
+BFS:
+Word Ladder I/II
+
+Stack
+
+Valid Parentheses
+Maintain left parentheses stack, if left parentheses, push to stack, if right parentheses, pop. If nothing to pop, invalid. In the end, if stack not empty, invalid
+
+Largest Rectangle in Histogram
+Maintain a increasing stack, iterate list, a[i] will pop all the stack elements greater than a[i], once a stack element poped, the left boundary of rectangle is index of stack.peek(), right boundary is i.
+Maximal Rectangle
+For each row, solve the Largest Rectangle in Histogram problem
+
+Evaluate Reverse Polish Notation
+Maintain a number stack, iterate the input list, if number, push to stack, if operator, pop two element from stack as operands and push result back to stack
+
+Basic Calculator
+Firstly convert to reverse polish notation, and then Evaluate Reverse Polish Notation
+To RPN: Maintain an operator stack, iterate list, if a[i]是左括号, push; if a[i]是右括号, pop until 左括号, if a[i]是加减, pop until 左括号; if a[i]是乘除, pop until 加，减或左括号
+
+Implement Stack with Queues
+Two queues, one empty, one full
+Push: enqueue to full queue
+Pop: dequeue from full queue and enqueue to empty queue until last element, return last element
+Peek: dequeue from full queue and enqueue to empty queue until last element, last element is the result and then enqueue it as well
+
+Implement Queue with Stack
+In stack and out stack, in stack has the queue’s order, out stack has the queue’s reverse order
+offer: if outstack is empty, just push to instack, if not, pop outstack and push to in stack and then push input
+poll: if outstack is not empty, just pop outstack, if not, pop in stack and push to outstack, and pop
+peek: same as poll
+
+Min Stack
+Maintain two stacks, one is the normal stack for the basic stack functionality and one is min Stack maintains element in decreased order, minStack.peek() is the min value
+
+Remove Duplicate Letters
+Given “cbacdcbc”, return “acbd”
+Maintain the stack to record the actual result. If current is smaller than top of stack and the top of stack count great than 0, which means the top of stack should use the one who will appear later, pop the top of stack. Every current should then push to stack
+
+Deque
+
+Sliding windows maximum
+Maintain a deque with index, so that deque.peek is the index of sliding windows maximum (return num[deque.peek())
+For num[i], remove out of windows range value from head of queue; then remove all the value less than num[i] from tail; then enqueue[i]
+小技巧，当既需要index有需要value的时候，将index enqueue即可
+
+Map/Set
+Substring with concatenation of all words:
+Map for the word count. Construct global map for the input words dictionary, then start with each character in string, cut the following string with same number, same length words and use a second Map for word count to compare with input dictionary.
+
+Valid Sudoku
+Set for dup detection in row, column and 9-cells.
+
+Group Anagrams
+Map for grouping, key is the sorted char array for a given word (same for anagrams) and value is the index for given word
+
+Max Points on a line
+Map for grouping
+
+Happy Number
+Use Map to detach if same state happened again or not
+
+Isomorphic String
+Map for maintaining/deciding valid 1 to many mapping. To validate 1 to 1 mapping, need to valid s—>t and t—>s, twice or validate the value Set also has no dup
+
+Word pattern
+Same as Isomorphic String
+
+Contains Duplicate
+Determine an int array has dup or not
+Set for dup detection
+
+Contains Duplicate II
+Determine an int array, nums[i] = nums[j] and the difference between i and j is at most k.
+Set with max Size = k for dup detection
+Contains Duplicate III
+Determine an int array, nums[i] diff nums[j] at most t and the difference between i and j is at most k.
+TreeSet with max size = k, for a given nums[i], check the floor and celling with nums[i] +/- t
+
+Valid Anagram
+Use int[26] as char count, compare the char count
+
+Bulls and Cons
+Bulls count is a[i] == b[i]. Cons count is related to digit count
+
+Top K Frequent Elements
+Map for freq count and heap for find K largest value
+
+Intersection of two arrays (No dup in result)
+Collect the dup element, set for dup detection. Create Set from first array and find the dup in second array
+
+Intersection of two arrays II (has Dup in result)
+Map for dup detection and freq count.
+
+Repeated DNA Sequences
+HashMap to count the 10-letter sequence frequency
+
+Longest Consecutive Sequence
+Insert all the array elements to Set, for each element, check if element - 1, element - 2 … and element + 1, element + 2 … in the Set or not, maxLen can be obtained among all elements. Note that if element - 1, element - 2 … element + 1, element + 2 … exist in Set, need to remove them to ensure O(n) time complexity.
+
+String:
+Longest Palindromic Substring
+O(n^2)算法: 找出以每个char为中点的回文substring，需要分奇偶数讨论
+
+Zigzag Conversation
+Simulate the whole process
+
+Longest Common Prefix among String array
+Use n-pointer compare
+
+Implement strStr
+O(n^2) solution, careful for the boundary check, KMP is not required
+
+Count and Say
+Just Count and Say n times
+
+Length of last word
+Once a word is finished, update the result value
+
+Valid Palindrome
+Two pointers from start and end and compare
+Reverse Words in a string
+Double reverse, reverse the entire string and then reverse each word (separate by token)
+
+Compare version number
+Split version string with token (string array 1 and string array 2) and compare array 1 and array 2 from 0 to n
+
+Shortest Palindrome
+O(n2), move the axis from middle to begin, padding the prefix for each axis and find the minimum padding. 分奇偶讨论
+
+Reverse String
+Be careful that string is immutable, need new space for reverse
+
+Reverse Vowels of a String
+Head and tail pointers, find the vowel in head and vowel in tail, swap
+
+Array
+
+Two Pointer 类
+
+相对型
+Two Sum
+Sort array and two pointers from head and tail moving towards
+Container with most water
+Head and tail pointer, 那个小就往中间移动, 最大值一定在这些Head/Tail的组合中
+
+3Sum
+Sort array and fix one num, two pointers from head and tail moving towards (inner loop using Two Sum), records all possible solution
+
+3Sum closet
+Sort array and fix one num, two pointers from head and tail moving towards (inner loop using Two Sum), record the closest solution
+
+4Sum
+For(for(twoSum)) or Hashtable to store 2Sum combo
+
+Trapping Rain Water/Trapping Rain Water II
+The water level is defined by the lower one of head/tail. head,tail哪个小往中间移动(两种情况)，可装的水由curLevel - nums[i] 决定
+
+Merge Interval
+Sort Interval with starting point, determine the overlap and combine interval with overlap
+
+Insert Intervals
+Find proper position for the inserted Interval (Previous Interval end >= inserted interval start, Binary Search might be used), then merge the overlap interval (find the end of interval)
+
+Sort colors (三色问题)
+on-line algorithm, scan the next input (index), [0, i] is 0, (i, j] is 1 and (j, index] is 2, keep updating i, j given input as 0, 1 or 2
+
+追击型
+Longest Substring Without Repeating Characters
+Sliding windows with fast/slow pointer, use Set to dup detect
+Minimum Window Substring
+Sliding windows with fast/slow pointer, use int array to count the number of each char
+
+Minimun Size Subarray Sum (positive input)
+Sliding windows with fast/slow pointer, fluctuate around target
+
+Scanning Line Problem
+The Skyline Problem
+Create Event for (location, isStart) sort the event based on location. Process each event as scanning line move from left to right
+
+Remove Duplicates from sorted Array
+Reuse the same array, newArrayIndex to record the end of new Array
+
+Remove Duplicates from sorted Array II (dup are allowed twice)
+Reuse the same array, newArrayIndex to record the end of new Array, state has isTwice
+
+Remove Element
+Reuse the same array, newArrayIndex to record the end of new Array
+
+First Missing positive
+Space reuse: Suppose you have an int array appear, appear[i] = 1 means i is appeared. Need to reuse nums space for appear
+Encode: s[i] = appear[i] * mode + nums[i]; appear[i] = s[i] / mode; nums[i] = s[i] % mode
+(mode = array length)
+
+Mege sorted Array
+Reuse the space in array1 and merge backward.
+
+Move Zeroes
+Reuse the same array, newArrayIndex to record the end of new Array
+
+Next Permutation
+From the end and iterate forward, find first a[i - 1] < a[i], leave a[0] to a[i - 1] untouched
+From the end, find the first number larger than a[i - 1], swap with a[i - 1]
+sort a[i] to end
+
+Pascal’s Triangle (打印n阶杨辉三角)
+
+Pascal’s Triangle II(打印nth row)
+Rolling array to save space since nth row just related to n-1th row
+
+Majority Element
+Maintain majority element and majority element count, if cur = majority element, count ++, else count—, update majority element once count = 0
+
+Majority Element II
+Same as Majority Element, need to keep majority element 1, 2, count1, 2.
+
+Rotate Array
+三步翻转，翻转整体，翻转前半，翻转后半 或 翻转前半，翻转后半，翻转整体
+
+Nth largest element in an Array
+Quick select: partition an array and choose first half or second half based on rank of pivot
+
+Summary Ranges
+Given [0,1,2,4,5,7], return [“0->2”,“4->5”,“7”]
+Use cur and next two pointers to check if elements are consecutive. Update the start/end for each term
+
+Game of life
+Simulate the entire process and reuse space by redefine the state
+
+Wiggle Sort II
+Partition array and interleaving first part and second part
+
+Divide and conquer
+
+Different ways to add Parentheses
+Divide and conquer: Divide array with each operator, recursively resolve left part and right part, then combine left and right
+
+Product of Array Except self
+Divide the array in the middle, recursively return the all element product of left and right, combine left and right by: for each left element, multiply the product of right part and for each right element, multiply the product of left part. For single element case, set the result to 1(except self)
+
+Union - Find
+Surrounded Regions
+
+Number of island
+
+Graph
+
+Clone graph
+
+Reconstruct Itinerary
+DFS: next possible steps are those ticket who’s orig is current place, access next possible steps with lexical order
+
+Course Schedule I, II
+Topology sort:
+BFS, maintain a queue with in-grade 0 node, when processing the node, update the in-grade of the next node, enqueue those node who’s in-grade become 0. If visited all nodes, no cycle.
+
+Trie
+Tree structure, Node has: word, isWord and hashMap<nextChar, nextTrieNode>.
+Operation: Insert, searchWord, searchPrefix, delete
+
+Implement Trie
+Insert: iterative
+searchWord/searchPrefix: iterative
+delete: recursive
+
+Add and Search Word - Data structure design
+Construct Trie to addWord, searchWord, once wildcard ‘.’ happens, searchWord with DFS(back -tracing)
+
+Word Search Two
+Construct Trie for dictionary, in the board, find the possible first letter and start DFS. Once a word is found, need to delete it from Trie (dup prevent)
+
+Design
+LRU:
+HashTable + DoublyLinkedList
+
+Peeking iterator
+Consume one more element for peeking
+
+Design Twitter
+Push or Poll
+
+Greedy:
+
+Jump Game
+Jump GameII
+Best time buy and sell stock II (No time limitation)
+Gas Station
+Candy
+Patching Array
