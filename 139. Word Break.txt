@@ -1,0 +1,115 @@
+Given a non-empty string s and a dictionary wordDict containing a list of non-empty words, determine if s can be segmented into a space-separated sequence of one or more dictionary words.
+
+Note:
+
+The same word in the dictionary may be reused multiple times in the segmentation.
+You may assume the dictionary does not contain duplicate words.
+Example 1:
+
+Input: s = "leetcode", wordDict = ["leet", "code"]
+Output: true
+Explanation: Return true because "leetcode" can be segmented as "leet code".
+Example 2:
+
+Input: s = "applepenapple", wordDict = ["apple", "pen"]
+Output: true
+Explanation: Return true because "applepenapple" can be segmented as "apple pen apple".
+             Note that you are allowed to reuse a dictionary word.
+Example 3:
+
+Input: s = "catsandog", wordDict = ["cats", "dog", "sand", "and", "cat"]
+Output: false
+
+
+#1 optimal solution 
+class Solution {
+    Map<String,Boolean> map = new HashMap<>();
+    public boolean wordBreak(String s, List<String> wordDict) {
+        
+        if(s == null || s.length() == 0){
+            return true;
+        }
+
+        if(wordDict.size() == 0){
+            return false;
+        }
+        
+        int maxLen = 0;
+        for (String word: wordDict) {
+            if (word.length() > maxLen) {
+                maxLen = word.length();
+            }
+        }
+        
+        boolean dp[] = new boolean[s.length()+1];
+        dp[0] = true;
+        
+        for(int i = 1; i <= s.length(); i++){
+            for(int lastWordLen = 1; lastWordLen <=i && lastWordLen <=maxLen; lastWordLen++){
+                if(dp[i-lastWordLen] && wordDict.contains(s.substring(i-lastWordLen, i))){
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        
+        return dp[s.length()];
+    }
+}
+
+solution 2: start from 0, traditional dp solution
+class Solution {
+    Map<String,Boolean> map = new HashMap<>();
+    public boolean wordBreak(String s, List<String> wordDict) {
+        
+        if(s == null || s.length() == 0){
+            return true;
+        }
+
+        if(wordDict.size() == 0){
+            return false;
+        }
+        
+        boolean dp[] = new boolean[s.length()+1];
+        dp[0] = true;
+        
+        for(int i = 1; i <= s.length(); i++){
+            for(int j = 0; j <i; j++){
+                if(dp[j] && wordDict.contains(s.substring(j, i))){
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        
+        return dp[s.length()];
+    }
+}
+
+solutin 3: memorization
+class Solution {
+    Map<String,Boolean> map = new HashMap<>();
+    public boolean wordBreak(String s, List<String> wordDict) {
+        if(map.containsKey(s)){
+            return map.get(s);
+        }
+        
+        if(s == null || s.length() == 0){
+            return true;
+        }
+        
+        if(wordDict.size() == 0){
+            return false;
+        }
+        
+        for(int i = 0; i < s.length(); i++){
+            if(wordBreak(s.substring(0, i),wordDict) && wordDict.contains(s.substring(i))){
+                map.put(s, true);
+                return true;
+            }
+        }
+        
+        map.put(s, false);
+        return false;
+    }
+}

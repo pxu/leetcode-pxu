@@ -1,0 +1,54 @@
+Description
+Given two strings, find the longest common subsequence (LCS).
+
+Your code should return the length of LCS.
+
+
+
+Have you met this question in a real interview?  
+Clarification
+What's the definition of Longest Common Subsequence?
+
+https://en.wikipedia.org/wiki/Longest_common_subsequence_problem
+http://baike.baidu.com/view/2020307.htm
+Example
+For "ABCD" and "EDCA", the LCS is "A" (or "D", "C"), return 1.
+
+For "ABCD" and "EACB", the LCS is "AC", return 2.
+
+解题思路：这类问题是第一次接触，不知道怎么做。百度了一下，发现了递推公式：dp【i】【j】：代表第一个字符串的前i个字符和第二个字符串的前j个字符比较能得到
+的最长的公共子序列。s【i】 == s【j】 ，dp【i】【j】 = dp【i - 1】【j - 1】 + 1； s【i】 ！= s【j】 ， 
+dp【i】【j】 = Max (dp[i][j - 1], dp[i - 1][j]); 初始化：dp【i】【0】 = dp【0】【j】 = 0； （i >= 1 && i <= l1[第一个字符串的长度] 、
+j >= 1 && j <= l2）
+
+相等的话自然是取dp【i - 1】【j - 1】  + 1，因为dp【i- 1】【j】 ， dp【i】【j -1】的值一定会小于等于dp【i - 1】【j - 1】  + 1，
+因为这里i - 1个字符肯定还得花一个字符来和j匹配，这样最优的情况就是dp【i- 2】【j - 1】  +  1，那么dp【i - 1】【j - 1】>= kdp【i- 2】【j - 1】,
+因为两个匹配的子串的长度更长，这样相同的字串的长度才会更大。不相等的情况就更容易理解了。
+可能会有空串。
+
+public class Solution {
+    /**
+     * @param A: A string
+     * @param B: A string
+     * @return: The length of longest common subsequence of A and B
+     */
+    public int longestCommonSubsequence(String A, String B) {
+        // write your code here
+        if(A == null || A.length() == 0 || B == null || B.length() ==0) return 0;
+        int ALen = A.length();
+        int BLen = B.length();
+        int dp[][] = new int[ALen+1][BLen+1];
+        for(int row = 1; row <=ALen; row++ ){
+            for(int col = 1 ; col <=BLen; col++){
+                dp[row][col] = Math.max(dp[row-1][col], dp[row][col-1]);
+                
+                if(A.charAt(row-1) == B.charAt(col-1)){
+                    dp[row][col] = dp[row-1][col-1] +1;
+                }
+                
+            }
+        }
+        
+        return dp[ALen][BLen];
+    }
+}
