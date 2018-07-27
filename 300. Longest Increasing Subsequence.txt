@@ -10,6 +10,33 @@ Note:
 There may be more than one LIS combination, it is only necessary for you to return the length.
 Your algorithm should run in O(n2) complexity.
 Follow up: Could you improve it to O(n log n) time complexity?
+solution 1: dp - version 1:
+
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        if(nums == null || nums.length == 0) return 0;
+        
+        int len = nums.length;
+        int dp[] = new int[len];
+        Arrays.fill(dp,1);
+        
+        for(int i = 1; i <len; i++){
+            for(int j = 0; j<i; j++){
+                if(nums[j] < nums[i]){
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+        }
+        
+        int res = Integer.MIN_VALUE;
+        for(int count: dp){
+            res = Math.max(res, count);
+        }
+        return res;
+        
+    }
+}
+
 solution 1: dp
 class Solution {
     public int lengthOfLIS(int[] nums) {
