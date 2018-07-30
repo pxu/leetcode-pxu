@@ -3205,6 +3205,227 @@ class Solution {
     }
 }
 
+103. Binary Tree Zigzag Level Order Traversal.txt
+
+Given a binary tree, return the zigzag level order traversal of its nodes' values. (ie, from left to right, then right to left for the next level and alternate between).
+
+For example:
+Given binary tree [3,9,20,null,null,15,7],
+    3
+   / \
+  9  20
+    /  \
+   15   7
+return its zigzag level order traversal as:
+[
+  [3],
+  [20,9],
+  [15,7]
+]
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        if(root == null){
+            return res;
+        }
+        
+        boolean inorder = true;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        
+        while(!queue.isEmpty()){
+            int size = queue.size();
+            List<Integer> currList = new LinkedList<>();
+            for(int i = 0; i < size; i++){
+                TreeNode curr = queue.remove();
+                if(inorder){
+                    currList.add(curr.val);
+                }else{
+                    currList.add(0, curr.val);
+                }
+                
+                if(curr.left != null) queue.add(curr.left);
+                if(curr.right !=null) queue.add(curr.right);
+            }
+            res.add(currList);
+            inorder = !inorder;
+        }
+        
+        return res;  
+    }
+}
+
+
+105. Construct Binary Tree from Preorder and Inorder Traversal.txt
+
+Given preorder and inorder traversal of a tree, construct the binary tree.
+
+Note:
+You may assume that duplicates do not exist in the tree.
+
+For example, given
+
+preorder = [3,9,20,15,7]
+inorder = [9,3,15,20,7]
+Return the following binary tree:
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+solution 1: easy to figure out version, tracking from 0
+class Solution {
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        if(preorder == null || preorder.length == 0 || inorder == null || inorder.length == 0) return null;
+        
+        return buildTreeHelper(preorder, inorder, 0, preorder.length-1,0);
+    }
+    
+    public TreeNode buildTreeHelper(int[] preorder, int[] inorder, int start, int end, int preorderIndex){
+        if(start > end) return null;
+        TreeNode root = new TreeNode(preorder[preorderIndex]);
+        int mid = findNode(root.val, inorder, start, end);
+        int leftTreeSize = mid - start;
+        int rightTreeSize = end - mid;
+        root.left = buildTreeHelper(preorder, inorder, start, mid-1, preorderIndex+1);
+        root.right = buildTreeHelper(preorder,inorder, mid+1, end,preorderIndex + leftTreeSize+1);
+        return root;
+        
+    }
+    
+    private int findNode(int val, int[] inorder, int start, int end){
+        for(int i = start; i <= end ; i++){
+            if(val == inorder[i]){
+                return i;
+            }
+        }
+        return -1;
+        
+    }
+}
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    int currPreOrderIndex = 0;
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        if(preorder == null || preorder.length == 0 || inorder == null || inorder.length == 0) return null;
+        
+        return buildTreeHelper(preorder, inorder, 0, preorder.length-1);
+    }
+    
+    public TreeNode buildTreeHelper(int[] preorder, int[] inorder, int start, int end){
+        if(start > end) return null;
+        TreeNode root = new TreeNode(preorder[currPreOrderIndex++]);
+        int mid = findNode(root.val, inorder, start, end);
+        
+        root.left = buildTreeHelper(preorder, inorder, start, mid-1);
+        root.right = buildTreeHelper(preorder,inorder, mid+1, end);
+        return root;
+        
+    }
+    
+    private int findNode(int val, int[] inorder, int start, int end){
+        for(int i = start; i <= end ; i++){
+            if(val == inorder[i]){
+                return i;
+            }
+        }
+        return -1;
+        
+    }
+}
+
+
+106. Construct Binary Tree from Inorder and Postorder Traversal.txt
+
+Given inorder and postorder traversal of a tree, construct the binary tree.
+
+Note:
+You may assume that duplicates do not exist in the tree.
+
+For example, given
+
+inorder = [9,3,15,20,7]
+postorder = [9,15,7,20,3]
+Return the following binary tree:
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+ 
+ /**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        
+       if(postorder == null || postorder.length == 0 || inorder == null || inorder.length == 0) return null;
+        
+        return buildTreeHelper(postorder, inorder,  0, postorder.length-1, postorder.length-1);
+    }
+    
+    public TreeNode buildTreeHelper(int[] postorder, int[] inorder, int start, int end, int postend){
+        if(start > end) return null;
+        TreeNode root = new TreeNode(postorder[postend]);
+        int mid = findNode(root.val, inorder, start, end);
+        int leftTreeSize = mid - start;
+        int rightTreeSize = end - mid;
+        root.right = buildTreeHelper(postorder,inorder, mid+1, end, postend-1 );
+        root.left = buildTreeHelper(postorder, inorder, start, mid-1, postend - rightTreeSize -1 );
+
+        return root;
+        
+    }
+    
+    private int findNode(int val, int[] inorder, int start, int end){
+        for(int i = start; i <= end ; i++){
+            if(val == inorder[i]){
+                return i;
+            }
+        }
+        return -1;
+        
+    }
+}
+
+
 108. Convert Sorted Array to Binary Search Tree.txt
 
 Given an array where elements are sorted in ascending order, convert it to a height balanced BST.
