@@ -18,6 +18,38 @@ Example 2:
 Input: nums = [4,5,6,7,0,1,2], target = 3
 Output: -1
 
+solution 1: version 1
+class Solution {
+    public int search(int[] nums, int target) {
+        if(nums == null || nums.length == 0) return -1;
+        int l = 0, r = nums.length-1;
+        
+        while(l + 1 < r){
+            int m = l + (r -l)/2;
+            
+            if(nums[m] >= nums[l]){
+                if(target >= nums[l] && target <= nums[m]){
+                    r = m;
+                }else{
+                    l = m;
+                }
+            }else{
+                if(target >= nums[m] && target <= nums[r]){
+                    l = m;
+                }else{
+                    r = m;
+                }
+            }
+        }
+        
+        
+        return target == nums[l]? l: target == nums[r]? r: -1;
+               
+    }
+}
+
+solution 1: version 2
+
 class Solution {
     public int search(int[] arr, int key) {
         

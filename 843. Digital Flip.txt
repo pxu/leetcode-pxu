@@ -1,0 +1,42 @@
+Description
+Give you an array of 01. Find the minimum number of flipping steps so that the array meets the following rules:
+The back of 1 can be either1 or 0, but0 must be followed by 0.
+
+solution 1: dp[][]
+public class Solution {
+    /**
+     * @param nums: the array
+     * @return: the minimum times to flip digit
+     */
+    public int flipDigit(int[] nums) {
+        // Write your code here
+        if(nums == null || nums.length == 0) return 0;
+        
+        int len = nums.length;
+        // dp[i][0] -> the minimum number flips needed for i ~ n when nums[i] == 0
+        // dp[i][1] -> the minimum number flips needed for i ~ n when nums[i] == 1
+        int dp[][] = new int[len+1][2];
+        
+        for(int i = len -1; i >=0; i--){
+            
+            if(nums[i] == 1){
+                 // current 1, can be followed by 0 or 1
+                dp[i][1] = Math.min(dp[i + 1][0], dp[i + 1][1]);
+                
+                // do the flip, change 1 to 0, followed by 0
+                dp[i][0] = dp[i+1][0]+1;
+            }else{
+                 // do the flip, change 0 to 1, followed by 0 or 1
+                dp[i][1] = Math.min(dp[i + 1][0], dp[i + 1][1])+1;
+                // current 0, followed by 0
+                dp[i][0] = dp[i+1][0];
+                
+            }
+            
+        }
+        
+        return Math.min(dp[0][0], dp[0][1]);
+        
+        
+    }
+}

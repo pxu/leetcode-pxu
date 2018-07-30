@@ -1,0 +1,34 @@
+Description
+Origami, each time the paper is folded from right to left, the dent is 0, the bump is 1. After the n number of folds, find the 01 sequence of the creases formed with the paper unrolling.
+
+1 <= n <= 20
+
+
+public class Solution {
+    /**
+     * @param n: The folding times
+     * @return: the 01 string
+     */
+    public String getString(int n) {
+        // Write your code here
+        if(n < 2) return "0";
+        int len = (int)Math.pow(2,n) - 1;
+        char res[] = new char[len];
+        folder(0, len-1,res, true);
+        return new String(res);
+    }
+    
+    public void folder(int start, int end, char[] res,boolean isLeft){
+        if(start > end) return;
+        
+        
+        Character val = null;
+        if(isLeft) val = '0';
+        else val = '1';
+        
+        int mid = (start + end)/2;
+        res[mid] = val;
+        folder(start, mid-1,res,true);
+        folder(mid+1, end, res,false);
+    }
+}
