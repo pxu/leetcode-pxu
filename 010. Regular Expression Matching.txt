@@ -43,7 +43,44 @@ s = "mississippi"
 p = "mis*is*p*."
 Output: false
 
-solution 1(recursion):
+solution 1: dp
+class Solution {
+    public boolean isMatch(String s, String p) {
+        if(p.isEmpty()){
+            return s.isEmpty();
+        }
+        
+        int m = s.length();
+        int n = p.length();
+        boolean dp[][] = new boolean[m+1][n+1];
+        dp[0][0] = true;
+        
+        for(int row = 1; row <= m; row++){
+            dp[row][0] = false;
+        }
+        
+        for(int col = 1; col <=n; col++){
+            dp[0][col] = (col > 1) && p.charAt(col-1) == '*' && dp[0][col-2];
+        }
+        
+        for(int row = 1; row <= s.length(); row++){
+            for(int col = 1; col <= p.length(); col++){
+                if(p.charAt(col-1) == '*'){
+                    dp[row][col] = dp[row][col-2] || (s.charAt(row-1) == p.charAt(col-2) || p.charAt(col-2) == '.') && dp[row-1][col]; 
+                }else{
+                    dp[row][col] = dp[row-1][col-1] && (s.charAt(row-1) == p.charAt(col-1) || p.charAt(col-1) == '.');
+                }
+                
+            }
+        }
+        
+       return dp[s.length()][p.length()];
+    }
+}
+
+
+
+solution 2(recursion):
 class Solution {
     public boolean isMatch(String s, String p) {
         if(p.isEmpty()){
