@@ -31,6 +31,7 @@ public class Solution {
     
     }
     
+    //https://leetcode.com/problems/median-of-two-sorted-arrays/discuss/2471/very-concise-ologminmn-iterative-solution-with-detailed-explanation
     public int findKth(int[] A, int[] B, int startA, int startB, int k){
         if(startA ==A.length){
             return B[startB+k-1];
