@@ -1,0 +1,181 @@
+There is a room with n lights which are turned on initially and 4 buttons on the wall. After performing exactly m unknown operations towards buttons, you need to return how many different kinds of status of the n lights could be.
+
+Suppose n lights are labeled as number [1, 2, 3 ..., n], function of these 4 buttons are given below:
+
+Flip all the lights.
+Flip lights with even numbers.
+Flip lights with odd numbers.
+Flip lights with (3k + 1) numbers, k = 0, 1, 2, ...
+Example 1:
+Input: n = 1, m = 1.
+Output: 2
+Explanation: Status can be: [on], [off]
+Example 2:
+Input: n = 2, m = 1.
+Output: 3
+Explanation: Status can be: [on, off], [off, on], [off, off]
+Example 3:
+Input: n = 3, m = 1.
+Output: 4
+Explanation: Status can be: [off, on, off], [on, off, on], [off, off, off], [off, on, on].
+Note: n and m both fit in range [0, 1000].
+
+
+
+class Solution {
+    public int flipLights(int n, int m) {
+        if(m == 0) return 1;
+        if(n == 1) return 2;
+        if(n == 2){
+            if(m == 1) return 3;
+            if(m > 1) return 4;
+        }
+        
+        if(m == 1) return 4;
+        if(m == 2) return 7;
+        
+        return 8;
+        
+    }
+}
+
+这道题又是一个**的数学题发火。找规律呀找规律。
+我们只需要考虑当 n<=2 and m < 3 的特殊情形。因为当 n >2 and m >=3, 结果肯定是 8.
+The four buttons:
+
+Flip all the lights.
+Flip lights with even numbers.
+Flip lights with odd numbers.
+Flip lights with (3k + 1) numbers, k = 0, 1, 2, ...
+如果我们使用了 button 1 和 2, 其效果等同于使用 button 3 。
+类似的..
+
+1 + 2 --> 3, 1 + 3 --> 2, 2 + 3 --> 1
+所以，只有 8 种情形。
+
+All_on, 1, 2, 3, 4, 1+4, 2+4, 3+4
+
+并且当 n>2 and m>=3 时，我们就能够获得所有的情形。
+
+以下是另外一种解释的方法：
+
+这 4 个按钮代表了 4 种数字。
+x % 2 == 1 && x % 3 == 1, such as x == 1;
+x % 2 == 1 && x % 3 != 1, such as x == 3;
+x % 2 == 0 && x % 3 == 1, such as x == 4;
+x % 2 == 0 && x % 3 != 1, such as x == 2.
+
+因此有 8 种独立的按钮操作（假设原来的状态是 on, on, on, on） : 
+1                                               (off, off, off, off)
+2                                               (on, off, on, off)
+3                                               (off, on, off, on)
+4                                               (off, on, on, off)
+1 + 4                                         (on, off, off, on)
+2 + 4                                         (off, off, on, on)
+3 + 4                                         (on, on, off, off)
+1 + 2 + 3 == 3 + 3                    (on, on, on, on)
+因为 1 + 2 == 3, 2 + 3 == 1, 1 + 3 == 2, 1 + 2 + 4 == 3 + 4， 2 + 3 + 4 == 1 + 4，1 + 3 + 4 == 2 + 4， 1 + 2 + 3 + 4 == 3 + 3 + 4 == 4。
+
+当 m == 0 时, 无事发生，只有 1 种状态。
+
+当 n == 1 时, bulb 可以为 "on" 状态(使用按钮 2 来按动偶数开关，不会造成任何变化 )。也可以为 "off" 状态(使用了按钮 1 or 3 or 4 )。
+操作 2 = 操作 1+操作 3 。操作 3 = 操作 1 + 操作 2 。操作 1 = 操作 2 + 操作 3 。因此，对于奇数次操作还是偶数次操作，我们都可以得到相同的状态。 当 n == 1 时，结果始终为 2 ，始终能得到 2 个状态。
+
+当 n == 2 时, 有 4 种可能的状态。"on, off" == 2 ==1 + 3 。   "off, on" == 3 == 1 + 2。    "off, off" == 1 == 2 + 3。    "on, on" == 1 + 1 == 2 + 3 + 1 == 1 + 3 + 3 + 1 ==  2 + 2 == 3 + 3 == 4 + 4 。除了状态 "on, on" 需要 2 次或者 2 次以上的操作，其他状态都可以通过任意奇数/偶数操作来得到。
+
+当 n == 3 时, 8 种 不同的状态都有可能发生。使用跟上面同样的分析方法，我们可以发现除了 m == 1 and m == 2 的情形, 其他的情形都能够得到 8 种状态。
+
+class Solution {
+    public int flipLights(int n, int m) {
+        if(m==0) return 1;
+        if(n==1) return 2;
+        if(n==2&&m==1) return 3;
+        if(n==2) return 4;
+        if(m==1) return 4;
+        if(m==2) return 7;
+        if(m>=3) return 8;
+        return 8;
+    }
+}
+还有大神表示，这道题或许可以考虑用 bit manipulation 来做。因为这 4 个操作可以看成是：对  111, 010, 101, 100 来进行 xor 操作。
+还有大神表示，这道题可以有 DP 的思路。
+
+ dp with m rows and n columns。dp[ i ][ j ] 表示 i 个操作 j 个灯泡 能得到的最多状态数（ i 与 j 从 1 开始计数）。假设 m == 5 ， n == 7, 那么 dp 如下所示：
+
+2, 3, 4, 4, 4, 4, 4, 
+2, 4, 7, 7, 7, 7, 7, 
+2, 4, 8, 8, 8, 8, 8, 
+2, 4, 8, 8, 8, 8, 8, 
+
+public class Solution {
+    //https://blog.csdn.net/huanghanqian/article/details/77857912
+    /**
+     * @param n: number of lights
+     * @param m: number of operations
+     * @return: the number of status
+     */
+    
+    // - 当m和n其中有任意一个数是0时，返回1
+
+    // - 当n = 1时
+    
+    // 只有两种情况，0和1
+    
+    // - 当n = 2时，
+    
+    // 这时候要看m的次数，如果m = 1，那么有三种状态 00，01，10
+    
+    // 当m > 1时，那么有四种状态，00，01，10，11
+    
+    // - 当m = 1时，
+    
+    // 此时n至少为3，那么我们有四种状态，000，010，101，011
+    
+    // - 当m = 2时，
+    
+    // 此时n至少为3，我们有七种状态：111，101，010，100，000，001，110
+    
+    // - 当m > 2时，
+    
+    // 此时n至少为3，我们有八种状态：111，101，010，100，000，001，110，011
+    public int flipLights(int n, int m) {
+        // write your code here
+        if(m == 0) return 1;
+        if(n == 1){
+          //  can use op 2 to make it ont changed or 1 to turn it off
+          return 2;  
+        } 
+        if(n == 2 && m == 1) {
+            // [on off] [off on] [off, off]
+            //comments:[on on] has to take to operations (i.e. 1+1)
+            return 3;
+        }
+        
+        if(n == 2 && m > 1) {
+            // [on off] [off on] [off, off][on on]
+            return 4;
+        }
+        
+        if(m == 1){
+            return 4;
+        }
+        
+        if(m == 2){
+            /**
+               off,off,off: 1
+               off,off,on:   2+4 + 1 
+               off,on, on:  4
+               on, on, on: 1+1
+               on on off: 2 + 4
+               on off off: 1 + 4
+               off on off: 2
+               on off on: 2
+            */
+            //off,off,on need 3 operations
+            return 7;
+        }
+        
+        return 8;
+        
+    }
+}
