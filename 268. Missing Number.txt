@@ -1,0 +1,57 @@
+
+Given an array containing n distinct numbers taken from 0, 1, 2, ..., n, find the one that is missing from the array.
+
+Example 1:
+
+Input: [3,0,1]
+Output: 2
+Example 2:
+
+Input: [9,6,4,2,3,5,7,0,1]
+Output: 8
+Note:
+Your algorithm should run in linear runtime complexity. Could you implement it using only constant extra space complexity?
+
+class Solution {
+    public int missingNumber(int[] nums) {
+        int n = nums.length ;
+        int res = 0;
+        for(int i = 0; i <= n;i++){
+            if(i != n){
+                res +=nums[i] -i;
+            }else{
+                res +=-i;
+            }
+            
+        }
+        
+        return -res;
+    }
+}
+
+class Solution {
+    public int missingNumber(int[] nums) {
+        if(nums == null || nums.length == 0){
+            return -1;
+        }
+        
+        int len = nums.length;
+        Arrays.sort(nums);
+        
+        if(nums[len-1] != len){
+            return len;
+        }else if(nums[0] != 0){
+            return 0;
+        }
+        
+        for(int i = 1; i < len; i++){
+            int expectedNum = nums[i-1] + 1;
+            if(nums[i] != expectedNum){
+                return expectedNum;
+            }
+        }
+        
+        return -1;
+        
+    }
+}
