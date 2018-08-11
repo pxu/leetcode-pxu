@@ -65,3 +65,43 @@ class Solution {
         return sb.toString();
     }
 }
+
+
+solution 2:
+class Solution {
+    public String countAndSay(int n) {
+        String res = "1";        
+        
+        for(int i = 1; i < n; i++){
+            res = helper(res);
+        }
+        
+        return res;
+    }
+    
+    public String helper(String str){
+        
+        char a[] = str.toCharArray();
+        StringBuilder sb = new StringBuilder();
+        char prev = a[0];
+        int count = 1;
+        if(1 == a.length) return sb.append(count).append(prev).toString();
+        for(int i = 1; i < a.length; i++){
+            char curr = a[i];
+            if(prev == curr){
+                count++;
+            }else{
+                sb.append(count).append(prev);
+                count = 1;
+                prev = curr;
+            }
+            
+            if(i == a.length -1){
+                sb.append(count).append(prev);
+            }
+        }
+        
+        return sb.toString();
+        
+    }
+}
