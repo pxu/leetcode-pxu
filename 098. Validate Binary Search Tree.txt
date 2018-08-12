@@ -57,6 +57,46 @@ class Solution {
     }
 }
 
+#solution 2: inorder search with iteration
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+        if(root == null) return true;
+        Stack<TreeNode> s = new Stack<>();
+        TreeNode c = root;
+        TreeNode p = null;
+        while(!s.isEmpty() || c!=null){
+            while(c != null){
+                s.push(c);
+                c = c.left;
+            }
+            
+            c = s.pop();
+            if(p == null){
+                p = c;
+            }else{
+                if(p.val >= c.val){
+                    return false;
+                }
+                p = c;
+            }
+            
+            c = c.right;
+        }
+        
+        return true;
+        
+    }
+}
+
 #solution 2: inorder search with recursion
 /**
  * Definition for a binary tree node.
