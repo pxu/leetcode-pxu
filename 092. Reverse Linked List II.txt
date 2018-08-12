@@ -10,6 +10,54 @@ A linked list can be reversed either iteratively or recursively. Could you imple
 
 http://blog.leanote.com/post/liuliu5151@gmail.com/Reverse-Linked-List-II-2
 
+solution 1: 
+解答：
+1. 创建Dummynode 录下head.
+2. 找到m的前节点Pre（这样做是为了方便用插入法reverse linkedlist）
+3. 记录下Pre的下一个节点 reverseTail，它将会是Reversed link的尾部。
+4. 翻转指定区间的链表，翻到最后一个节点时，把reverseTail.next指向它的next。这样就把翻转链表与之后
+的链表接起来了。
+
+5. 返回dummynode的下一个节点。
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode reverseBetween(ListNode head, int m, int n) {
+        if(head == null || head.next == null || m == n) return head;
+        
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode prev = dummy;
+        
+        for(int i = 1; i< m; i++){
+            prev = prev.next;
+        }
+        //System.out.println("prev:" + prev.val);
+        ListNode reverseTail = prev.next;
+        ListNode curr = prev.next;
+        prev.next = null;
+        for(int i = 0; i < (n-m+1); i++){
+            if(i == (n-m)){
+                reverseTail.next = curr.next;
+            }
+            
+            ListNode temp = curr.next;
+            
+            curr.next = prev.next;
+            prev.next = curr;
+            curr = temp;
+        }
+        
+        return dummy.next;
+    }
+}
+
 
 /**
  * Definition for singly-linked list.
