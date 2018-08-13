@@ -41,3 +41,20 @@ class Solution {
         
     }
 }
+
+这题使用动态规划较为简便。最初的思路为自顶向下，对每一行进行遍历，同时使用一个一维数组dp存储最佳状态的路径和(dp的长度为三角形的层数)。以此类推，最后一层将会记录所有的路径结果，这时只需要对dp进行遍历求出当中的最小值即可。以上面的三角形为例子。当遍历第一行时，dp的存储为2,0,0,0，第二行时状态为2+3=5,2+4=6，第三行为5+6=11,min(5+5,6+5)=10,6+7=12，第四行为15,min(11+1,10+1)=11,min(10+8,12+8=20)=18,16。只需要遍历最后一行即可求出最小路径和11。
+
+class Solution {
+    public int minimumTotal(List<List<Integer>> triangle) {
+       int size = triangle.size();
+       int [] dp = new int[size + 1];
+       
+       for(int i = size -1; i>=0 ; i--){
+           for(int j = 0; j < triangle.get(i).size(); j++){
+               dp[j] = triangle.get(i).get(j) + Math.min(dp[j], dp[j+1]);
+           }
+       }
+        
+        return dp[0];
+    }
+}
