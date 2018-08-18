@@ -1,0 +1,64 @@
+We are given two sentences A and B.  (A sentence is a string of space separated words.  Each word consists only of lowercase letters.)
+
+A word is uncommon if it appears exactly once in one of the sentences, and does not appear in the other sentence.
+
+Return a list of all uncommon words. 
+
+You may return the list in any order.
+
+ 
+
+Example 1:
+
+Input: A = "this apple is sweet", B = "this apple is sour"
+Output: ["sweet","sour"]
+Example 2:
+
+Input: A = "apple apple", B = "banana"
+Output: ["banana"]
+ 
+
+Note:
+
+0 <= A.length <= 200
+0 <= B.length <= 200
+A and B both contain only spaces and lowercase letters.
+class Solution {
+    public String[] uncommonFromSentences(String A, String B) {
+        List<String> list = new ArrayList<>();
+        if(A== null || A.length() == 0 || B == null || B.length() == 0){
+            return null;
+        }
+        
+        Map<String,Integer> aMap = helper(A);
+        Map<String,Integer> bMap = helper(B);
+        
+        for(String word: B.split("\\s+")){
+            if(!aMap.containsKey(word) && bMap.get(word) == 1){
+                list.add(word);
+            }
+        }
+        
+        for(String word: A.split("\\s+")){
+            if(!bMap.containsKey(word) && aMap.get(word) == 1){
+                list.add(word);
+            }
+        }
+        
+        int size = list.size();
+        String res[] = new String[size];
+        
+        return list.toArray(new String[list.size()]);
+    }
+    
+    private Map<String,Integer> helper(String str){
+        String[] words = str.split("\\s+");
+        Map<String, Integer> map = new HashMap<>();
+        for(String word: words){
+            map.put(word, map.getOrDefault(word,0) +1);
+        }
+        
+        return map;
+        
+    }
+}
