@@ -23,6 +23,30 @@ Note:
 0 <= A.length <= 200
 0 <= B.length <= 200
 A and B both contain only spaces and lowercase letters.
+
+class Solution {
+    public String[] uncommonFromSentences(String A, String B) {
+        List<String> list = new ArrayList<>();
+        
+        Map<String, Integer> map = new HashMap<>();
+        for(String word: A.split("\\s+")){
+            map.put(word, map.getOrDefault(word,0) +1);
+        }
+        
+        for(String word: B.split("\\s+")){
+            map.put(word, map.getOrDefault(word,0) +1);
+        }
+        
+        for(String key: map.keySet()){
+            if(map.get(key) == 1){
+                list.add(key);
+            }
+        }
+        
+        return list.toArray(new String[list.size()]);
+    }
+    
+}
 class Solution {
     public String[] uncommonFromSentences(String A, String B) {
         List<String> list = new ArrayList<>();
