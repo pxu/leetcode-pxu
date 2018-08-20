@@ -31,6 +31,7 @@ class Solution {
             if(val %2 == 0){
                 count +=val;
             }else{
+            //可以从奇数次中的字符里取出偶数个也可以加入回文串
                 count += val-1;
                 isOdd = true;
             }
