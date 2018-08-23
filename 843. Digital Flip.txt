@@ -12,6 +12,33 @@ Given array = [1,0,1,0,1,0], return 2.
 
 Explanation:
 Turn the second 1 and the third 1 into 0.
+public class Solution {
+    /**
+     * @param nums: the array
+     * @return: the minimum times to flip digit
+     */
+    public int flipDigit(int[] nums) {
+        // Write your code here
+        if(nums == null || nums.length == 0) return 0;
+        
+        int len = nums.length;
+        int dp[][] = new int[len][2];
+        dp[len-1][0] = nums[len-1] == 0? 0:1;
+        dp[len-1][1] = nums[len-1] == 0? 1:0;
+        for(int i = len -2; i>=0; i--){
+            if(nums[i] == 1){
+                dp[i][1] = Math.min(dp[i+1][0],dp[i+1][1]);
+                dp[i][0] = dp[i+1][0] +1;
+            }else{
+                dp[i][1] = Math.min(dp[i+1][0],dp[i+1][1]) +1;
+                dp[i][0] = dp[i+1][0];
+            }
+        }
+        
+        return Math.min(dp[0][0], dp[0][1]);
+        
+    } 
+}
 
 solution 1: dp[][]
 public class Solution {
