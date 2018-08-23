@@ -44,7 +44,7 @@ class Solution {
         for(int r = 0; r < rows; r++){
             for(int c = 0; c < cols; c++){
                StringBuilder sb = new StringBuilder();
-               dfs(grid,r,c,rows,cols, 'o',sb); 
+               dfs(grid,r,c,rows,cols, 's',sb); 
                if(sb.length() >0){
                 shapes.add(sb.toString());
                }
@@ -62,13 +62,15 @@ class Solution {
         
         sb.append(di);
         grid[row][col] = -1;
-        dfs(grid,row-1,col,rows,cols,'u', sb);
-        dfs(grid,row+1,col,rows,cols,'d', sb);
         dfs(grid,row,col-1,rows,cols,'l',sb);
         dfs(grid,row,col+1,rows,cols,'r',sb);
-        sb.append('b');
+        dfs(grid,row-1,col,rows,cols,'u', sb);
+        dfs(grid,row+1,col,rows,cols,'d', sb);
 
-        
-        
+        /*具体比如：向上查找记录‘u’，向右记录‘r'，以此类推，但是必须包括返回时的路径以便唯一性。
+        “1，1” 和 “1，1” 在不完全路径下是一样的字符串“s -> r -> d”。
+        “1, 0”    “0, 1”
+        sredee vs srdeee, 
+        sb.append('e');
     }
 }
