@@ -1,0 +1,166 @@
+#1 handle big files transfer
+client:
+  /*
+       * Check if the content can be streamed by making a HEAD request.
+       */
+      HttpHeaders responseHeaders = restTemplate.headForHeaders(uri);
+      /*
+       * Retrieve the content length and the ACCEPT-RANGES header. The ACCEPT-RANGES header would be only present if the
+       * server supports byte streaming for the requested content.
+       */
+      long contentLength = responseHeaders.getContentLength();
+      List<String> acceptRanges = responseHeaders.get(HttpHeaders.ACCEPT_RANGES);
+      log.info("{} : Content length of the response : {}, AcceptRanges : {}", fileName, contentLength, acceptRanges);
+      FileSystemResource resource = new FileSystemResource(new File(tempCacheLocation, fileName));
+
+      try (FileOutputStream fos = (FileOutputStream) resource.getOutputStream())
+      {
+        HttpHeaders requestHeaders = new HttpHeaders();
+        requestHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_OCTET_STREAM));
+
+        /*
+         * If the header is not empty, then it implies that the content can be streamed.
+         */
+        if (contentLength > propertyManager.getMaxFileSize() && acceptRanges != null
+            && !acceptRanges.isEmpty() && acceptRanges.get(0).equals("bytes"))
+        {
+          /*
+           * Compose a List of Range instances for performing a byte range request.
+           */
+          List<Range> ranges = Range.getRanges(propertyManager.getMaxFileSize(), contentLength);
+          log.info("{} : List of ranges to stream the package contents : {}", fileName, ranges);
+
+          for (Range range : ranges)
+          {
+            requestHeaders.set("Range", range.getStart() + "-" + range.getEnd());
+            writeToFileUploadStream(fos, uri, requestHeaders);
+          }
+        }
+        else
+        {
+          writeToFileUploadStream(fos, uri, requestHeaders);
+          log.info("{} : File is written into temp location", fileName);
+        }
+      }
+      return resource;
+    }
+    catch (IOException | RangeSplitException | ContentPathException e)
+    {
+      log.error("Error in fetching the content from cloud :  Filename : {}, Path : {}", fileName, path);
+      throw new DataHubReceiverException(
+          "Error in fetching the content from cloud :  Filename : " + fileName + ", Path : " + path, e);
+    }
+  }
+  
+    /**
+   * @param fos
+   * @param uri
+   * @param requestHeaders
+   * @throws IOException
+   */
+  private void writeToFileUploadStream(FileOutputStream fos, String uri, HttpHeaders requestHeaders) throws IOException
+  {
+    HttpEntity<String> entity = new HttpEntity<String>(requestHeaders);
+    ResponseEntity<byte[]> response = restTemplate.exchange(uri, HttpMethod.GET, entity, byte[].class);
+    fos.write(response.getBody());
+  }
+}
+
+# server side
+/**
+   * This method copies the file from cloud storage to local system
+   * @param filepathFromPrem
+   * @return String
+   * @throws IOException
+ * @throws ContentRepositoryException 
+   */
+  @RequestMapping(value = "/getContentFromCloud", method = { RequestMethod.GET, RequestMethod.HEAD })
+  @ResponseBody
+  public ResponseEntity<byte[]> getPackageContent(@RequestParam("path") String contentObjectPath,
+      HttpServletRequest request) throws ContentServiceException 
+  {
+    try 
+    {
+      ResourceWrapper resource = contentRepoService.getResource(contentObjectPath, containerName);
+      return readFile(request, resource, resource.getResource().getFilename(), false);
+    }
+    catch (ContentRepositoryException e)
+    {
+      throw new ContentServiceException(e.getMessage(), e);
+    }
+  }
+  
+  /**
+   * Read file
+   * 
+   * @param request
+   * @param resource
+   * @param fileName
+   * @return
+   * @throws ContentServiceException
+   */
+  private ResponseEntity<byte[]> readFile(HttpServletRequest request, ResourceWrapper resource, String fileName,
+      boolean inline) throws ContentServiceException 
+  {
+    byte[] byteBuffer = null;
+    HttpHeaders headers = null;
+    HttpStatus status = null;
+    try 
+    {
+      String requestMethod = request.getMethod();
+      headers = new HttpHeaders();
+      headers.setContentType(MediaType.valueOf(resource.getMimeType()));
+      if (inline) 
+      {
+        headers.add("Content-Disposition", "inline; filename=\"" + fileName + "\"");
+      } 
+      else
+      {
+        headers.setContentDispositionFormData("fileName", fileName);
+      }
+      headers.add(HttpHeaders.CONTENT_LENGTH, String.valueOf(resource.getResource().contentLength()));
+      /*
+       * If it is a HEAD request, the client wants to know if the server
+       * supports streaming for this particular resource. Advertise
+       * streaming capabilities only on HEAD requests.
+       */
+      if (RequestMethod.HEAD == RequestMethod.valueOf(requestMethod))
+      {
+        if (resource.isStreamable()) 
+        {
+          headers.add(HttpHeaders.ACCEPT_RANGES, "bytes");
+        }
+        status = HttpStatus.OK;
+      }
+      /*
+       * If it is not a HEAD request, check for a range request. If it is
+       * a range request, serve the bytes in the queried range, else,
+       * serve the full content.
+       */
+      else 
+      {
+        String rangeRequestHeader = request.getHeader(HttpHeaders.RANGE);
+        if (StringUtils.isEmpty(rangeRequestHeader)) 
+        {
+          byteBuffer = resource.getAllBytes();
+          status = HttpStatus.OK;
+        } 
+        else 
+        {
+          Range range = Range.from(rangeRequestHeader);
+          byteBuffer = resource.stream(range);
+          status = HttpStatus.PARTIAL_CONTENT;
+          headers.add(HttpHeaders.ACCEPT_RANGES, "bytes");
+          headers.add(HttpHeaders.CONTENT_RANGE, "bytes " + range.getStart() + "-" + range.getEnd() + "/"
+              + resource.getResource().contentLength());
+          headers.add(HttpHeaders.CONTENT_LENGTH, String.valueOf(range.getLength()));
+        }
+      }
+    } 
+    catch (InvalidMediaTypeException | ResourceInspectionException | ResourceStreamException
+        | RangeFormatException | IOException e) 
+    {
+      throw new ContentServiceException(e.getMessage(), e);
+    }
+    return new ResponseEntity<byte[]>(byteBuffer, headers, status);
+  }
